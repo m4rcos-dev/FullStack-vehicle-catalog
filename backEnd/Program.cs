@@ -11,13 +11,13 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<VehicleContext>(options =>
+builder.Services.AddDbContext<DataContext>(options =>
 {
   string connectionString = builder.Configuration.GetConnectionString("Default");
   options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 });
 
-builder.Services.AddScoped<IVehicleRepository, VehicleRepository>();
+builder.Services.AddScoped<IDataRepository, DataRepository>();
 
 var app = builder.Build();
 

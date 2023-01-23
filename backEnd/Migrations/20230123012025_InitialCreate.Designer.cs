@@ -9,47 +9,47 @@ using backEnd.Data;
 
 namespace backEnd.Migrations
 {
-    [DbContext(typeof(VehicleContext))]
-    [Migration("20230123012025_InitialCreate")]
-    partial class InitialCreate
+  [DbContext(typeof(DataContext))]
+  [Migration("20230123012025_InitialCreate")]
+  partial class InitialCreate
+  {
+    protected override void BuildTargetModel(ModelBuilder modelBuilder)
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
-        {
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.1")
-                .HasAnnotation("Relational:MaxIdentifierLength", 64);
+      modelBuilder
+          .HasAnnotation("ProductVersion", "6.0.1")
+          .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("backEnd.Model.Vehicle", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+      modelBuilder.Entity("backEnd.Model.Vehicle", b =>
+          {
+            b.Property<int>("Id")
+                      .ValueGeneratedOnAdd()
+                      .HasColumnType("int");
 
-                    b.Property<string>("Foto")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+            b.Property<string>("Foto")
+                      .IsRequired()
+                      .HasColumnType("longtext");
 
-                    b.Property<string>("Marca")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+            b.Property<string>("Marca")
+                      .IsRequired()
+                      .HasColumnType("longtext");
 
-                    b.Property<string>("Modelo")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+            b.Property<string>("Modelo")
+                      .IsRequired()
+                      .HasColumnType("longtext");
 
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+            b.Property<string>("Nome")
+                      .IsRequired()
+                      .HasColumnType("longtext");
 
-                    b.Property<int>("Valor")
-                        .HasColumnType("int");
+            b.Property<int>("Valor")
+                      .HasColumnType("int");
 
-                    b.HasKey("Id");
+            b.HasKey("Id");
 
-                    b.ToTable("Vehicles");
-                });
+            b.ToTable("Vehicles");
+          });
 #pragma warning restore 612, 618
-        }
     }
+  }
 }

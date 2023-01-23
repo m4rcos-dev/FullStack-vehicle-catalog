@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace backEnd.Repository
 {
-  public class VehicleRepository : IVehicleRepository
+  public class DataRepository : IDataRepository
   {
-    private readonly VehicleContext _context;
+    private readonly DataContext _context;
 
-    public VehicleRepository(VehicleContext context)
+    public DataRepository(DataContext context)
     {
       _context = context;
     }

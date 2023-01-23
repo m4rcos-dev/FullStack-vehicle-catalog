@@ -8,228 +8,228 @@ using backEnd.Data;
 
 namespace backEnd.Migrations
 {
-    [DbContext(typeof(VehicleContext))]
-    partial class VehicleContextModelSnapshot : ModelSnapshot
+  [DbContext(typeof(DataContext))]
+  partial class VehicleContextModelSnapshot : ModelSnapshot
+  {
+    protected override void BuildModel(ModelBuilder modelBuilder)
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
-        {
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.1")
-                .HasAnnotation("Relational:MaxIdentifierLength", 64);
+      modelBuilder
+          .HasAnnotation("ProductVersion", "6.0.1")
+          .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("backEnd.Model.Vehicle", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+      modelBuilder.Entity("backEnd.Model.Vehicle", b =>
+          {
+            b.Property<int>("Id")
+                      .ValueGeneratedOnAdd()
+                      .HasColumnType("int");
 
-                    b.Property<string>("Foto")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+            b.Property<string>("Foto")
+                      .IsRequired()
+                      .HasColumnType("longtext");
 
-                    b.Property<string>("Marca")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+            b.Property<string>("Marca")
+                      .IsRequired()
+                      .HasColumnType("longtext");
 
-                    b.Property<string>("Modelo")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+            b.Property<string>("Modelo")
+                      .IsRequired()
+                      .HasColumnType("longtext");
 
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+            b.Property<string>("Nome")
+                      .IsRequired()
+                      .HasColumnType("longtext");
 
-                    b.Property<int>("Valor")
-                        .HasColumnType("int");
+            b.Property<int>("Valor")
+                      .HasColumnType("int");
 
-                    b.HasKey("Id");
+            b.HasKey("Id");
 
-                    b.ToTable("Vehicles");
+            b.ToTable("Vehicles");
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Foto = "https://images.kavak.services/images/210324/EXTERIOR-frontSidePilotNear-1668775519613.jpeg?d=540x310",
-                            Marca = "Fiat",
-                            Modelo = "FIREFLY DRIVE",
-                            Nome = "Argo",
-                            Valor = 54299
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Foto = "https://images.kavak.services/images/130560/EXTERIOR-frontSidePilotNear-16368287673581.jpg?d=540x310",
-                            Marca = "Volkswagen",
-                            Modelo = "CONFORTLINE",
-                            Nome = "Jetta",
-                            Valor = 61899
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Foto = "https://images.kavak.services/images/230080/EXTERIOR-frontSidePilotNear-1673296643848.jpeg?d=540x310",
-                            Marca = "Nissan",
-                            Modelo = "START SL",
-                            Nome = "Kicks",
-                            Valor = 103899
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Foto = "https://images.kavak.services/images/229537/EXTERIOR-frontSidePilotNear-1672940491302.jpeg?d=540x310",
-                            Marca = "Reanult",
-                            Modelo = "BOSE",
-                            Nome = "Captur",
-                            Valor = 101799
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Foto = "https://images.kavak.services/images/227910/EXTERIOR-frontSidePilotNear-1672773788002.jpeg?d=540x310",
-                            Marca = "Hyundai",
-                            Modelo = "ATTITUDE",
-                            Nome = "Creta",
-                            Valor = 89399
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Foto = "https://images.kavak.services/images/222290/EXTERIOR-frontSidePilotNear-1669302398885.jpeg?d=540x310",
-                            Marca = "Nissan",
-                            Modelo = "SV START",
-                            Nome = "Sentra",
-                            Valor = 88499
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Foto = "https://images.kavak.services/images/217501/EXTERIOR-frontSidePilotNear-1670287752538.jpeg?d=540x310",
-                            Marca = "Volkswagen",
-                            Modelo = "TSI HIGHLINE",
-                            Nome = "Polo",
-                            Valor = 86599
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Foto = "https://images.kavak.services/images/202525/EXTERIOR-frontSidePilotNear-1664398382774.jpeg?d=540x310",
-                            Marca = "Kia",
-                            Modelo = "EX",
-                            Nome = "Picanto",
-                            Valor = 44299
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Foto = "https://images.kavak.services/images/185593/EXTERIOR-frontSidePilotNear-1652981076301.jpeg?d=540x310",
-                            Marca = "Honda",
-                            Modelo = "EX",
-                            Nome = "City",
-                            Valor = 64499
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Foto = "https://images.kavak.services/images/181804/EXTERIOR-frontSidePilotNear-1649480858244.jpeg?d=540x310",
-                            Marca = "Ford",
-                            Modelo = "SE PLUS SEDAN",
-                            Nome = "Focus",
-                            Valor = 60399
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Foto = "https://images.kavak.services/images/181368/EXTERIOR-frontSidePilotNear-1652646901335.jpeg?d=540x310",
-                            Marca = "Chevrolet",
-                            Modelo = "LT",
-                            Nome = "Sonic",
-                            Valor = 40799
-                        },
-                        new
-                        {
-                            Id = 12,
-                            Foto = "https://images.kavak.services/images/157678/EXTERIOR-frontSidePilotNear-1643099969436.jpeg?d=540x310",
-                            Marca = "Toyota",
-                            Modelo = "XEI",
-                            Nome = "Corolla",
-                            Valor = 80299
-                        },
-                        new
-                        {
-                            Id = 13,
-                            Foto = "https://images.kavak.services/images/123225/duster-renault-dynamique-2016-exterior-frontsidepilotnear-16345586052689.jpg?d=540x310",
-                            Marca = "Rnault",
-                            Modelo = "DYNAMIQUE",
-                            Nome = "Duster",
-                            Valor = 56699
-                        },
-                        new
-                        {
-                            Id = 14,
-                            Foto = "https://images.kavak.services/images/115521/EXTERIOR-frontSidePilotNear-16337327260090.jpg?d=540x310",
-                            Marca = "Rnault",
-                            Modelo = "SCE EXPRESSION",
-                            Nome = "Duster",
-                            Valor = 73199
-                        },
-                        new
-                        {
-                            Id = 15,
-                            Foto = "https://images.kavak.services/images/107525/creta-hyundai-attitude-2017-exterior-frontsidepilotnear-16267947141895.jpg?d=540x310",
-                            Marca = "Hyundai",
-                            Modelo = "ATTITUDE",
-                            Nome = "Creta",
-                            Valor = 80999
-                        },
-                        new
-                        {
-                            Id = 16,
-                            Foto = "https://images.kavak.services/images/226275/EXTERIOR-frontSidePilotNear-1672860729334.jpeg?d=540x310",
-                            Marca = "Jeep",
-                            Modelo = "LIMITED",
-                            Nome = "Renegate",
-                            Valor = 117199
-                        },
-                        new
-                        {
-                            Id = 17,
-                            Foto = "https://images.kavak.services/images/209338/EXTERIOR-frontSidePilotNear-1667506367535.jpeg?d=540x310",
-                            Marca = "Fiat",
-                            Modelo = "E.TORQ PRECISION",
-                            Nome = "Cronos",
-                            Valor = 72399
-                        },
-                        new
-                        {
-                            Id = 18,
-                            Foto = "https://images.kavak.services/images/217952/EXTERIOR-frontSidePilotNear-1669059504713.jpeg?d=540x310",
-                            Marca = "Toyota",
-                            Modelo = "SEDAN XLS MULTIDRIVE",
-                            Nome = "Yaris",
-                            Valor = 88099
-                        },
-                        new
-                        {
-                            Id = 19,
-                            Foto = "https://images.kavak.services/images/209619/EXTERIOR-frontSidePilotNear-1668204832666.jpeg?d=540x310",
-                            Marca = "Fiat",
-                            Modelo = "CABRIO",
-                            Nome = "500",
-                            Valor = 70799
-                        },
-                        new
-                        {
-                            Id = 20,
-                            Foto = "https://images.kavak.services/images/169847/EXTERIOR-frontSidePilotNear-1665780946432.jpeg?d=540x310",
-                            Marca = "Volvo",
-                            Modelo = "T4 FWD",
-                            Nome = "S60",
-                            Valor = 55699
-                        });
-                });
+            b.HasData(
+                      new
+                  {
+                    Id = 1,
+                    Foto = "https://images.kavak.services/images/210324/EXTERIOR-frontSidePilotNear-1668775519613.jpeg?d=540x310",
+                    Marca = "Fiat",
+                    Modelo = "FIREFLY DRIVE",
+                    Nome = "Argo",
+                    Valor = 54299
+                  },
+                      new
+                  {
+                    Id = 2,
+                    Foto = "https://images.kavak.services/images/130560/EXTERIOR-frontSidePilotNear-16368287673581.jpg?d=540x310",
+                    Marca = "Volkswagen",
+                    Modelo = "CONFORTLINE",
+                    Nome = "Jetta",
+                    Valor = 61899
+                  },
+                      new
+                  {
+                    Id = 3,
+                    Foto = "https://images.kavak.services/images/230080/EXTERIOR-frontSidePilotNear-1673296643848.jpeg?d=540x310",
+                    Marca = "Nissan",
+                    Modelo = "START SL",
+                    Nome = "Kicks",
+                    Valor = 103899
+                  },
+                      new
+                  {
+                    Id = 4,
+                    Foto = "https://images.kavak.services/images/229537/EXTERIOR-frontSidePilotNear-1672940491302.jpeg?d=540x310",
+                    Marca = "Reanult",
+                    Modelo = "BOSE",
+                    Nome = "Captur",
+                    Valor = 101799
+                  },
+                      new
+                  {
+                    Id = 5,
+                    Foto = "https://images.kavak.services/images/227910/EXTERIOR-frontSidePilotNear-1672773788002.jpeg?d=540x310",
+                    Marca = "Hyundai",
+                    Modelo = "ATTITUDE",
+                    Nome = "Creta",
+                    Valor = 89399
+                  },
+                      new
+                  {
+                    Id = 6,
+                    Foto = "https://images.kavak.services/images/222290/EXTERIOR-frontSidePilotNear-1669302398885.jpeg?d=540x310",
+                    Marca = "Nissan",
+                    Modelo = "SV START",
+                    Nome = "Sentra",
+                    Valor = 88499
+                  },
+                      new
+                  {
+                    Id = 7,
+                    Foto = "https://images.kavak.services/images/217501/EXTERIOR-frontSidePilotNear-1670287752538.jpeg?d=540x310",
+                    Marca = "Volkswagen",
+                    Modelo = "TSI HIGHLINE",
+                    Nome = "Polo",
+                    Valor = 86599
+                  },
+                      new
+                  {
+                    Id = 8,
+                    Foto = "https://images.kavak.services/images/202525/EXTERIOR-frontSidePilotNear-1664398382774.jpeg?d=540x310",
+                    Marca = "Kia",
+                    Modelo = "EX",
+                    Nome = "Picanto",
+                    Valor = 44299
+                  },
+                      new
+                  {
+                    Id = 9,
+                    Foto = "https://images.kavak.services/images/185593/EXTERIOR-frontSidePilotNear-1652981076301.jpeg?d=540x310",
+                    Marca = "Honda",
+                    Modelo = "EX",
+                    Nome = "City",
+                    Valor = 64499
+                  },
+                      new
+                  {
+                    Id = 10,
+                    Foto = "https://images.kavak.services/images/181804/EXTERIOR-frontSidePilotNear-1649480858244.jpeg?d=540x310",
+                    Marca = "Ford",
+                    Modelo = "SE PLUS SEDAN",
+                    Nome = "Focus",
+                    Valor = 60399
+                  },
+                      new
+                  {
+                    Id = 11,
+                    Foto = "https://images.kavak.services/images/181368/EXTERIOR-frontSidePilotNear-1652646901335.jpeg?d=540x310",
+                    Marca = "Chevrolet",
+                    Modelo = "LT",
+                    Nome = "Sonic",
+                    Valor = 40799
+                  },
+                      new
+                  {
+                    Id = 12,
+                    Foto = "https://images.kavak.services/images/157678/EXTERIOR-frontSidePilotNear-1643099969436.jpeg?d=540x310",
+                    Marca = "Toyota",
+                    Modelo = "XEI",
+                    Nome = "Corolla",
+                    Valor = 80299
+                  },
+                      new
+                  {
+                    Id = 13,
+                    Foto = "https://images.kavak.services/images/123225/duster-renault-dynamique-2016-exterior-frontsidepilotnear-16345586052689.jpg?d=540x310",
+                    Marca = "Rnault",
+                    Modelo = "DYNAMIQUE",
+                    Nome = "Duster",
+                    Valor = 56699
+                  },
+                      new
+                  {
+                    Id = 14,
+                    Foto = "https://images.kavak.services/images/115521/EXTERIOR-frontSidePilotNear-16337327260090.jpg?d=540x310",
+                    Marca = "Rnault",
+                    Modelo = "SCE EXPRESSION",
+                    Nome = "Duster",
+                    Valor = 73199
+                  },
+                      new
+                  {
+                    Id = 15,
+                    Foto = "https://images.kavak.services/images/107525/creta-hyundai-attitude-2017-exterior-frontsidepilotnear-16267947141895.jpg?d=540x310",
+                    Marca = "Hyundai",
+                    Modelo = "ATTITUDE",
+                    Nome = "Creta",
+                    Valor = 80999
+                  },
+                      new
+                  {
+                    Id = 16,
+                    Foto = "https://images.kavak.services/images/226275/EXTERIOR-frontSidePilotNear-1672860729334.jpeg?d=540x310",
+                    Marca = "Jeep",
+                    Modelo = "LIMITED",
+                    Nome = "Renegate",
+                    Valor = 117199
+                  },
+                      new
+                  {
+                    Id = 17,
+                    Foto = "https://images.kavak.services/images/209338/EXTERIOR-frontSidePilotNear-1667506367535.jpeg?d=540x310",
+                    Marca = "Fiat",
+                    Modelo = "E.TORQ PRECISION",
+                    Nome = "Cronos",
+                    Valor = 72399
+                  },
+                      new
+                  {
+                    Id = 18,
+                    Foto = "https://images.kavak.services/images/217952/EXTERIOR-frontSidePilotNear-1669059504713.jpeg?d=540x310",
+                    Marca = "Toyota",
+                    Modelo = "SEDAN XLS MULTIDRIVE",
+                    Nome = "Yaris",
+                    Valor = 88099
+                  },
+                      new
+                  {
+                    Id = 19,
+                    Foto = "https://images.kavak.services/images/209619/EXTERIOR-frontSidePilotNear-1668204832666.jpeg?d=540x310",
+                    Marca = "Fiat",
+                    Modelo = "CABRIO",
+                    Nome = "500",
+                    Valor = 70799
+                  },
+                      new
+                  {
+                    Id = 20,
+                    Foto = "https://images.kavak.services/images/169847/EXTERIOR-frontSidePilotNear-1665780946432.jpeg?d=540x310",
+                    Marca = "Volvo",
+                    Modelo = "T4 FWD",
+                    Nome = "S60",
+                    Valor = 55699
+                  });
+          });
 #pragma warning restore 612, 618
-        }
     }
+  }
 }

@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace backEnd.Data
 {
-  public class VehicleContext : DbContext
+  public class DataContext : DbContext
   {
-    public VehicleContext(DbContextOptions<VehicleContext> options) : base(options)
+    public DataContext(DbContextOptions<DataContext> options) : base(options)
     {
     }
 

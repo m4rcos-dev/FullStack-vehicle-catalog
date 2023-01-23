@@ -2,7 +2,7 @@ using backEnd.Model;
 
 namespace backEnd.Repository
 {
-  public interface IVehicleRepository
+  public interface IDataRepository
   {
     Task<IEnumerable<Vehicle>> SearchVehicles();
     Task<Vehicle> SearchVehicle(int id);

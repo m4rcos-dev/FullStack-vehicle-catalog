@@ -9,9 +9,9 @@ namespace backEnd.Controllers
 
   public class VehicleController : ControllerBase
   {
-    private readonly IVehicleRepository _repository;
+    private readonly IDataRepository _repository;
 
-    public VehicleController(IVehicleRepository repository)
+    public VehicleController(IDataRepository repository)
     {
       _repository = repository;
     }
