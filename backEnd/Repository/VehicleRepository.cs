@@ -30,12 +30,12 @@ namespace backEnd.Repository
 
     public void UpdateVehicle(Vehicle vehicle)
     {
-      throw new NotImplementedException();
+      _context.Update(vehicle);
     }
 
     public void DeleteVehicle(Vehicle vehicle)
     {
-      throw new NotImplementedException();
+      _context.Remove(vehicle);
     }
 
     public async Task<bool> SaveChangeAsync()
