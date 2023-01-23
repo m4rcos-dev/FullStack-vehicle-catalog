@@ -1,9 +1,11 @@
 using backEnd.Model;
 using backEnd.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backEnd.Controllers
 {
+  [Authorize]
   [ApiController]
   [Route("[controller]")]
 
