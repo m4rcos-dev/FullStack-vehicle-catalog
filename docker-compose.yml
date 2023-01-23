@@ -2,35 +2,39 @@ version: "1"
 
 services:
   # Serviço que irá rodar o node
+
   dotnet:
-    # Imagem base do container
-    image: mcr.microsoft.com/dotnet/sdk:6.0
-    # Nome do container para facilitar execução
-    container_name: back_end_vehicle_catalog
-    # Mesmo que `docker run -t`
-    tty: true
-    # Mesmo que `docker run -i`
-    stdin_open: true
-    # Restarta a imagem caso algo a faça parar
-    restart: always
-    # Diretório padrão de execução
-    working_dir: /app
-    # Lista de volumes (diretórios) mapeados de fora para dentro do container
+
+    image: mcr.microsoft.com/dotnet/sdk:6.0 # Imagem base do container
+
+    container_name: back_end_vehicle_catalog # Nome do container para facilitar execução
+
+    tty: true # Mesmo que `docker run -t`
+
+    stdin_open: true # Mesmo que `docker run -i`
+
+    restart: always # Restarta a imagem caso algo a faça parar
+
+    working_dir: /app # Diretório padrão de execução
+
     volumes:
+      # Lista de volumes (diretórios) mapeados de fora para dentro do container
       # Monta o diretório atual, com todos os dados do projeto,
       # dentro do diretório /app
       - ./back-end:/app
-    # Lista de serviços do qual este serviço depende
+
     depends_on:
-      # Precisa do banco funcionando antes de subir o node
-      - db
-    # Lista de portas mapeadas de dentro para fora do container
-    # na notação porta_de_fora:porta_de_dentro
+      # Lista de serviços do qual este serviço depende
+
+      - db # Precisa do banco funcionando antes de subir o node
+
     ports:
-      # Expõe a porta padrão da aplicação: altere aqui caso use outra porta
-      - 3000:3000
-    # Configura as variáveis de ambiente dentro do container
+      # Lista de portas mapeadas de dentro para fora do container # na notação porta_de_fora:porta_de_dentro
+
+      - 3000:3000 # Expõe a porta padrão da aplicação: altere aqui caso use outra porta
+
     environment:
+      # Configura as variáveis de ambiente dentro do container
       MYSQL_USER: root
       MYSQL_PASSWORD: password
       MYSQL_HOST: db
@@ -52,6 +56,10 @@ services:
       - 3306:3306
       - 33060:33060
     environment:
+      MYSQL_DATABASE: vehicleCatalog
+      MYSQL_USER: root
+      MYSQL_PASSWORD: password
+      MYSQL_HOST: localhost
       MYSQL_ROOT_PASSWORD: password
 
 # Lista de redes que os containeres irão utilizar

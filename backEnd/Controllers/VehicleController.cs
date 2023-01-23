@@ -1,4 +1,5 @@
 using backEnd.Model;
+using backEnd.Repository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backEnd.Controllers
@@ -8,25 +9,25 @@ namespace backEnd.Controllers
 
   public class VehicleController : ControllerBase
   {
-    private static List<Vehicle> Vehicles()
+    private readonly IVehicleRepository _repository;
+
+    public VehicleController(IVehicleRepository repository)
     {
-      return new List<Vehicle>{
-        new Vehicle{ Id = 1, Nome = "Jetta", Marca = "Fiat", Modelo = "SPORT", Valor = 59300, Foto = "Foto Jetta"}
-      };
+      _repository = repository;
     }
 
     [HttpGet]
-    public IActionResult Get()
+    public async Task<IActionResult> Get()
     {
-      return Ok(Vehicles());
+      var vehicles = await _repository.SearchVehicles();
+      return vehicles.Any() ? Ok(vehicles) : NoContent();
     }
 
     [HttpPost]
-    public IActionResult Post(Vehicle vehicle)
+    public async Task<IActionResult> Post(Vehicle vehicle)
     {
-      var vehicles = Vehicles();
-      vehicles.Add(vehicle);
-      return Ok(vehicle);
+      _repository.CreateVehicle(vehicle);
+      return await _repository.SaveChangeAsync() ? Ok("Vehicle addd sucess!") : BadRequest("Error adding vehicle");
     }
   }
 }

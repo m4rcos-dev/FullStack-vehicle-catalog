@@ -1,4 +1,5 @@
 using backEnd.Data;
+using backEnd.Repository;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +16,8 @@ builder.Services.AddDbContext<VehicleContext>(options =>
   string connectionString = builder.Configuration.GetConnectionString("Default");
   options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 });
+
+builder.Services.AddScoped<IVehicleRepository, VehicleRepository>();
 
 var app = builder.Build();
 
