@@ -18,9 +18,9 @@ namespace backEnd.Repository
       return await _context.Vehicles.ToListAsync();
     }
 
-    public Task<IEnumerable<Vehicle>> SearchVehicle(int id)
+    public async Task<Vehicle> SearchVehicle(int id)
     {
-      throw new NotImplementedException();
+      return await _context.Vehicles.Where(x => x.Id == id).FirstOrDefaultAsync();
     }
 
     public void CreateVehicle(Vehicle vehicle)

@@ -23,6 +23,13 @@ namespace backEnd.Controllers
       return vehicles.Any() ? Ok(vehicles) : NoContent();
     }
 
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById(int id)
+    {
+      var vehicle = await _repository.SearchVehicle(id);
+      return vehicle != null ? Ok(vehicle) : NotFound("Vheicle Not Found");
+    }
+
     [HttpPost]
     public async Task<IActionResult> Post(Vehicle vehicle)
     {

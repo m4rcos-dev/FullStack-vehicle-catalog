@@ -5,7 +5,7 @@ namespace backEnd.Repository
   public interface IVehicleRepository
   {
     Task<IEnumerable<Vehicle>> SearchVehicles();
-    Task<IEnumerable<Vehicle>> SearchVehicle(int id);
+    Task<Vehicle> SearchVehicle(int id);
     void CreateVehicle(Vehicle vehicle);
     void UpdateVehicle(Vehicle vehicle);
     void DeleteVehicle(Vehicle vehicle);
