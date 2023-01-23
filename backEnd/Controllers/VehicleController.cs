@@ -26,7 +26,7 @@ namespace backEnd.Controllers
     {
       var vehicles = Vehicles();
       vehicles.Add(vehicle);
-      return Ok(vehicles);
+      return Ok(vehicle);
     }
   }
 }
