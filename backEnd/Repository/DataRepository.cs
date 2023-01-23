@@ -12,10 +12,6 @@ namespace backEnd.Repository
     {
       _context = context;
     }
-    public async Task<IEnumerable<User>> SearchUsers()
-    {
-      return await _context.Users.ToListAsync();
-    }
 
     public async Task<IEnumerable<Vehicle>> SearchVehicles()
     {

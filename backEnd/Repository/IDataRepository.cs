@@ -4,7 +4,6 @@ namespace backEnd.Repository
 {
   public interface IDataRepository
   {
-    Task<IEnumerable<User>> SearchUsers();
     Task<IEnumerable<Vehicle>> SearchVehicles();
     Task<Vehicle> SearchVehicle(int id);
     void CreateVehicle(Vehicle vehicle);

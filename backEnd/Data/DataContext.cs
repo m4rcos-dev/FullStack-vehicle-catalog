@@ -1,22 +1,20 @@
 using backEnd.Model;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace backEnd.Data
 {
-  public class DataContext : DbContext
+  public class DataContext : IdentityDbContext
   {
     public DataContext(DbContextOptions<DataContext> options) : base(options)
     {
     }
-    public DbSet<User> Users { get; set; }
     public DbSet<Vehicle> Vehicles { get; set; }
 
-    protected override void OnModelCreating(ModelBuilder builder)
+    protected override async void OnModelCreating(ModelBuilder builder)
     {
-      builder.Entity<User>()
-          .HasData(new List<User>(){
-            new User(1, "admin", "admin")
-          });
+      base.OnModelCreating(builder);
 
       builder.Entity<Vehicle>()
           .HasData(new List<Vehicle>(){
