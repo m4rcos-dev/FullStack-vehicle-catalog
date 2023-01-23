@@ -8,11 +8,16 @@ namespace backEnd.Data
     public DataContext(DbContextOptions<DataContext> options) : base(options)
     {
     }
-
+    public DbSet<User> Users { get; set; }
     public DbSet<Vehicle> Vehicles { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
+      builder.Entity<User>()
+          .HasData(new List<User>(){
+            new User(1, "admin", "admin")
+          });
+
       builder.Entity<Vehicle>()
           .HasData(new List<Vehicle>(){
       new Vehicle(1, "Argo", "Fiat", "FIREFLY DRIVE", 54299, "https://images.kavak.services/images/210324/EXTERIOR-frontSidePilotNear-1668775519613.jpeg?d=540x310"),
