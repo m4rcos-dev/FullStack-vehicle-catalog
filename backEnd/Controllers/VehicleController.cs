@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace backEnd.Controllers
 {
-  [Authorize]
+  // [Authorize]
   [ApiController]
   [Route("[controller]")]
 
@@ -32,6 +32,8 @@ namespace backEnd.Controllers
       return vehicle != null ? Ok(vehicle) : NotFound("Vheicle Not Found");
     }
 
+
+    [ClaimsAuthorize("Vehicle", "Create")]
     [HttpPost]
     public async Task<IActionResult> Post(Vehicle vehicle)
     {
@@ -39,6 +41,7 @@ namespace backEnd.Controllers
       return await _repository.SaveChangeAsync() ? Ok("Vehicle addd sucess!") : BadRequest("Error adding vehicle");
     }
 
+    [ClaimsAuthorize("Vehicle", "Update")]
     [HttpPut("{id}")]
 
     public async Task<IActionResult> Put(int id, Vehicle vehicle)
@@ -57,8 +60,8 @@ namespace backEnd.Controllers
       return await _repository.SaveChangeAsync() ? Ok("Vehicle update sucess!") : BadRequest("Error update vehicle");
     }
 
+    [ClaimsAuthorize("Vehicle", "Delete")]
     [HttpDelete("{id}")]
-
     public async Task<IActionResult> Delete(int id)
     {
       var vehiclesDB = await _repository.SearchVehicle(id);
