@@ -1,5 +1,5 @@
 #VsCode configs
-.vscode
+*.VsCode
 
 # .NET Core build folders
 bin/
