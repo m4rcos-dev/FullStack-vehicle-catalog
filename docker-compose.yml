@@ -1,54 +1,14 @@
-version: "1"
+version: "3"
 
 services:
-  # Serviço que irá rodar o node
-
-  dotnet:
-
-    image: mcr.microsoft.com/dotnet/sdk:6.0 # Imagem base do container
-
-    container_name: back_end_vehicle_catalog # Nome do container para facilitar execução
-
-    tty: true # Mesmo que `docker run -t`
-
-    stdin_open: true # Mesmo que `docker run -i`
-
-    restart: always # Restarta a imagem caso algo a faça parar
-
-    working_dir: /app # Diretório padrão de execução
-
-    volumes:
-      # Lista de volumes (diretórios) mapeados de fora para dentro do container
-      # Monta o diretório atual, com todos os dados do projeto,
-      # dentro do diretório /app
-      - ./back-end:/app
-
-    depends_on:
-      # Lista de serviços do qual este serviço depende
-
-      - db # Precisa do banco funcionando antes de subir o node
-
-    ports:
-      # Lista de portas mapeadas de dentro para fora do container # na notação porta_de_fora:porta_de_dentro
-
-      - 3000:3000 # Expõe a porta padrão da aplicação: altere aqui caso use outra porta
-
-    environment:
-      # Configura as variáveis de ambiente dentro do container
-      MYSQL_USER: root
-      MYSQL_PASSWORD: password
-      MYSQL_HOST: db
-      # JWT_SECRET: secret
-
-      # Serviço que irá rodar o banco de dados
   db:
-    # Caso esteja utilizando MacOS M1, descomentar a linha abaixo
-    # platform: linux/x86_64
-    # Se a linha de cima não resolver, esta abaixo é outra opção
-    # platform: linux/arm64/v8
     container_name: db_vheicles_catalog
     image: mysql:8.0.21
-    restart: always
+    tty: true # Mesmo que `docker run -t`
+    stdin_open: true # Mesmo que `docker run -i`
+    restart: always # Restarta a imagem caso algo a faça parar
+    volumes:
+      - ./backEnd/db:/var/lib/mysql
     # Lista de portas mapeadas de dentro para fora do container
     # na notação porta_de_fora:porta_de_dentro
     ports:
@@ -61,13 +21,6 @@ services:
       MYSQL_PASSWORD: password
       MYSQL_HOST: localhost
       MYSQL_ROOT_PASSWORD: password
-
-# Lista de redes que os containeres irão utilizar
-networks:
-  # Rede padrão, criada automaticamente
-  default:
-    # Dá um nome específico à rede padrão
-    name: vehicle_catalog_net
 
 # As chaves `tty`, `stdin_open` e `command` fazem com que o container fique
 # rodando em segundo plano, bem como tornam possível o uso do comando
