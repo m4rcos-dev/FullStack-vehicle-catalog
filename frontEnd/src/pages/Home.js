@@ -1,12 +1,10 @@
 import React from 'react'
-import Header from '../components/Header'
-import Main from '../components/Main'
+import Vehicles from '../components/Vehicles'
 
 function Home() {
   return (
     <div>
-      <Header />
-      <Main />
+      <Vehicles />
     </div>
   )
 }

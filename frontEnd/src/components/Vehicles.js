@@ -1,10 +1,10 @@
 
-import { Box, Container } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import VehiclesServices from '../services/VehiclesServices';
 
 function Vehicles() {
-  const [allVehicles, setAllVehicles] = useState();
+  const [allVehicles, setAllVehicles] = useState([]);
 
   const fetchAllVehicle = async () => {
     const vheicles = await VehiclesServices.fetchAllVehicles();
@@ -13,21 +13,36 @@ function Vehicles() {
 
   useEffect(() => { fetchAllVehicle() }, [])
   console.log(allVehicles);
+
   return (
-    <div>
-      <Container>
-        <Box sx={{ my: 2 }}>
-          {[...new Array(30)]
-            .map(
-              () => `Cras mattis consectetur purus sit amet fermentum.
-Cras justo odio, dapibus ac facilisis in, egestas eget quam.
-Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-Praesent commodo cursus magna, vel scelerisque nisl consectetur et.`,
-            )
-            .join('\n')}
-        </Box>
-      </Container>
-    </div>
+    <Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
+      <Box sx={{ width: "67%", display: "flex", flexWrap: "wrap", justifyContent: "center", mt: '1rem' }}>
+        {allVehicles.map((vehicle) => (
+          <Box sx={{
+            width: 305,
+            height: 287, p: "0 8 0 8",
+            boxShadow: 8, m: "0.4rem",
+            borderRadius: "0.375rem",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-start"
+          }}>
+            <img src={vehicle.foto} alt={vehicle.nome} style={{ width: "305px" }} />
+            <Box sx={{
+              height: "100vh",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-around",
+              alignItems: "flex-start",
+              m: "1rem"
+            }}>
+              <Typography sx={{ fontWeight: "bold" }}>{`${vehicle.marca} ${vehicle.nome} ${vehicle.modelo}`}</Typography>
+              <Typography variant='h6' color="primary">{vehicle.valor.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</Typography>
+            </Box>
+          </Box>
+        ))}
+      </Box>
+    </Box>
   )
 }
 
