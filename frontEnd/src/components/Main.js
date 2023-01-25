@@ -1,7 +1,17 @@
 import { Box, Container } from '@mui/material';
-import React from 'react'
+import React, { useEffect, useState } from 'react';
+import VehiclesServices from '../services/VehiclesServices';
 
 function Main() {
+  const [allVehicles, setAllVehicles] = useState();
+
+  const fetchAllVehicle = async () => {
+    const vheicles = VehiclesServices.fetchAllVehicles();
+    setAllVehicles(vheicles);
+  }
+
+  useEffect(() => { fetchAllVehicle() }, [])
+  console.log(allVehicles);
   return (
     <div>
       <Container>
