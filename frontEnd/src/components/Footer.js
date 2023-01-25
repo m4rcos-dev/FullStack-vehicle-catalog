@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Divider, Typography } from "@mui/material"
+import { Box, Typography } from "@mui/material"
 import { Container } from '@mui/system'
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
