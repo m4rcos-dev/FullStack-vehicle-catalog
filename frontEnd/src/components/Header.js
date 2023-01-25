@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types';
 import AppBar from '@mui/material/AppBar';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
@@ -6,6 +6,7 @@ import Slide from '@mui/material/Slide';
 import { Autocomplete, Box, Link, Stack, TextField, Toolbar, Typography } from '@mui/material';
 import { common } from '@mui/material/colors';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+import VehiclesServices from '../services/VehiclesServices';
 
 function HideOnScroll(props) {
   const { children } = props;
@@ -19,6 +20,15 @@ function HideOnScroll(props) {
 }
 
 function Header() {
+  const [allVehicles, setAllVehicles] = useState([]);
+
+  const fetchAllVehicle = async () => {
+    const vheicles = await VehiclesServices.fetchAllVehicles();
+    setAllVehicles(vheicles);
+  }
+
+  useEffect(() => { fetchAllVehicle() }, [])
+  console.log(allVehicles);
   return (
     <div>
       <HideOnScroll>
@@ -60,7 +70,7 @@ function Header() {
             freeSolo
             id="free-solo-2-demo"
             disableClearable
-            options={top100Films.map((option) => option.title)}
+            options={top100Films.map((option) => option.nome)}
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -80,7 +90,7 @@ function Header() {
             freeSolo
             id="free-solo-2-demo"
             disableClearable
-            options={top100Films.map((option) => option.title)}
+            options={allVehicles.map((option) => option.nome)}
             renderInput={(params) => (
               <TextField
                 {...params}
