@@ -23,10 +23,25 @@ function Header() {
   const [allVehicles, setAllVehicles] = useState([]);
   const [open, setOpen] = React.useState(false);
   const [value, setvalue] = useState({ email: "", password: "" })
+  const [emailIsValid, setEmailIsValid] = useState();
+  const [passwordIsValid, setPasswordIsvalid] = useState();
 
   const handleValue = ({ target }) => {
-    setvalue({ [target.name]: target.value })
-    console.log(target.value);
+    setvalue({ ...value, [target.name]: target.value })
+    const validEmail = /^[a-zA-Z]+@[a-zA-Z]+$/;
+    const isValid = validEmail.test(value.email);
+    setEmailIsValid(!isValid)
+
+    const validPassword = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[0-9])(?=.{8,})/;
+    const isValidP = validPassword.test(value.password);
+    setPasswordIsvalid(!isValidP)
+
+  }
+
+  const login = async (e) => {
+    e.preventDefault();
+    const loginResult = await VehiclesServices.fetchLogin(value.email, value.password);
+    console.log(loginResult);
   }
 
   const handleClose = () => {
@@ -43,7 +58,6 @@ function Header() {
   }
 
   useEffect(() => { fetchAllVehicle() }, [])
-  console.log(allVehicles);
 
   // const DialogCustom = styled(Dialog)(({ theme }) => ({
   //   '& .css-1t1j96h-MuiPaper-root-MuiDialog-paper': {
@@ -137,6 +151,7 @@ function Header() {
           </Box>
           <Box
             component="form"
+            onSubmit={e => login(e)}
             sx={{
               width: 350,
               height: 415,
@@ -150,6 +165,8 @@ function Header() {
             <Typography sx={{ m: "1rem", textAlign: "left" }} color={common.black} variant="h5">Olá!</Typography>
             <Typography sx={{ m: "1rem", textAlign: "left" }} color={common.black} variant="h7">Insira seu e-mail e senha abaixo para iniciar sua sessão!</Typography>
             <TextField
+              error={emailIsValid}
+              required={true}
               type="email"
               id="outlined-basic"
               label="Email"
@@ -160,6 +177,8 @@ function Header() {
               sx={{ m: "1rem" }}
             />
             <TextField
+              error={passwordIsValid}
+              required={true}
               type="password"
               id="outlined-basic"
               label="Senha"
@@ -169,9 +188,9 @@ function Header() {
               value={value.password}
               sx={{ m: "1rem" }}
             />
-            <Box sx={{textAlign: "right", m: "2rem 1rem 0rem 0rem"}}>
+            <Box sx={{ textAlign: "right", m: "2rem 1rem 0rem 0rem" }}>
               <Button type="button" onClick={handleClose}>Cancelar</Button>
-              <Button type="submit" onClick={handleClose}>Login</Button>
+              <Button type="submit">Login</Button>
             </Box>
           </Box>
         </Box>
