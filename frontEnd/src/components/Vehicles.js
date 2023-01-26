@@ -15,7 +15,7 @@ function Vehicles() {
   const [open2, setOpen2] = useState(false);
   const [open3, setOpen3] = useState(false);
   const [resutlVehicle, setResultVehicle] = useState({});
-  const [resutlVehicleCreate, setResultVehicleCreate] = useState({});
+  const [resutlVehicleCreate, setResultVehicleCreate] = useState({foto: 'Apague e cole a url da foto do veículo'});
   const [currentIdEdit, setCurrentIdEdit] = useState();
   const [openAlert, setOpenAlert] = useState(false);
   const { releaseIcons } = useContext(MyContext);
@@ -76,8 +76,8 @@ function Vehicles() {
   }
 
   const handleValueCreate = ({ target }) => {
-    setResultVehicleCreate({ ...resutlVehicle, [target.name]: target.value })
-    console.log(resutlVehicle);
+    setResultVehicleCreate({ ...resutlVehicleCreate, [target.name]: target.value })
+    console.log(resutlVehicleCreate);
   }
 
   const fetchEditVehicle = async (e) => {
@@ -109,7 +109,7 @@ function Vehicles() {
 
   const fetchCreateVehicle = async (e) => {
     e.preventDefault();
-    const { nome, marca, modelo, valor, foto } = resutlVehicle;
+    const { nome, marca, modelo, valor, foto } = resutlVehicleCreate;
     const obj = {
       nome: nome,
       marca: marca,
@@ -334,7 +334,7 @@ function Vehicles() {
             }}
           >
             <Typography sx={{ m: "0.5rem", textAlign: "center" }} color={common.black} variant="h5">Olá!</Typography>
-            <Typography sx={{ m: "0.5rem", textAlign: "center" }} color={common.black} variant="h7">Preencha estão os dados do veículo abaixo!</Typography>
+            <Typography sx={{ m: "0.5rem", textAlign: "center" }} color={common.black} variant="h7">Preencha os dados do veículo abaixo!</Typography>
             <TextField
               variant='filled'
               required={true}
