@@ -65,7 +65,7 @@ const VehiclesServices = {
 
   fetchCreateVehicle: async (objeto, token) => {
     try {
-      const result = axios.post(`${url}/Vehicle/`, objeto, {
+      const result = axios.post(`${url}/Vehicle`, objeto, {
         headers: {
           Authorization: `Bearer ${token}`
         }
