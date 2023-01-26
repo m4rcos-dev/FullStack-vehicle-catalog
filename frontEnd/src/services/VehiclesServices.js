@@ -15,10 +15,10 @@ const VehiclesServices = {
   fetchLogin: async (email, password) => {
     try {
       const result = await axios.post(`${url}/Auth/login`,
-      {
+        {
           email,
           password,
-      });
+        });
       return result.data;
     } catch (error) {
       if (error.response.status === 400) {
@@ -30,13 +30,21 @@ const VehiclesServices = {
 
   fetchAllOneVehicle: async (id) => {
     try {
-      const vehicles = await axios.get(`${url}/Vehicle`,
-      {
-        params: {
-          id: id
+      const vehicles = await axios.get(`${url}/Vehicle/${id}`)
+      return vehicles.data;
+    } catch (error) {
+      return "Erro ao se conectar com o servidor"
+    }
+  },
+
+  fetchEditVehicle: async (id, objeto, token) => {
+    try {
+      const result = axios.put(`${url}/Vehicle/${id}`, objeto, {
+        headers: {
+          Authorization: `Bearer ${token}`
         }
       });
-      return vehicles.data;
+      return result.data;
     } catch (error) {
       return "Erro ao se conectar com o servidor"
     }

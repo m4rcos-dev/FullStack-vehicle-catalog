@@ -33,10 +33,10 @@
 
   ### A aplicação é dividia em 3 camadas:
   - Banco de Dados em MySql componentizado no Docker.
-  - BackEnd utilizando o framwork dotnet sdk.
-  - FronteEnd utilizando os framworks node e react.
+  - BackEnd utilizando o framework dotnet sdk.
+  - FronteEnd utilizando os frameworks node e react.
 
-  > Rode inicialmente o `banco de dados` entrando na pasta que esta na raiz do projeto depois com o comando `docker-compose up -d` suba o banco de dados.
+  > Rode inicialmente o `banco de dados` na pasta que esta na raiz do projeto depois com o comando `docker-compose up -d` suba o banco de dados.
   - Lembre-se de parar o `mysql` se estiver usando localmente na porta padrão (`3306`), ou adapte, caso queria fazer uso da aplicação em containers
   - Esses serviços irão inicializar um container chamado `db_vehicles_catalog`.
 
