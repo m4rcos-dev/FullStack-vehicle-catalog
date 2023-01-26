@@ -147,6 +147,11 @@ function Vehicles() {
     setOpenAlert(false);
   };
 
+  const sortByValor = () => {
+    const sorted = allVehicles.sort((a, b) => a.valor - b.valor);
+    return sorted;
+  }
+
   // const DialogCustom = styled(Dialog)(({ theme }) => ({
   //   '& .css-1t1j96h-MuiPaper-root-MuiDialog-paper': {
   //     maxWidth: "800px",
@@ -192,7 +197,7 @@ function Vehicles() {
           <AddIcon sx={{color: "text.secondary", width: '30%', height: '100vh' }} />
       </BoxCustom>}
       <Box sx={{ width: "67%", display: "flex", flexWrap: "wrap", justifyContent: "center", mt: '1rem' }}>
-        {allVehicles.map((vehicle) => (
+        {sortByValor().map((vehicle) => (
           <Box sx={{
             width: 305,
             height: 287, p: "0 8 0 8",
