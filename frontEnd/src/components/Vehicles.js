@@ -1,4 +1,4 @@
-import { Alert, Backdrop, Box, Button, Snackbar, styled, TextField, Typography } from '@mui/material';
+import { Alert, Backdrop, Box, Button, InputAdornment, Snackbar, styled, TextField, Typography } from '@mui/material';
 import React, { useContext, useEffect, useState } from 'react'
 import VehiclesServices from '../services/VehiclesServices';
 import EditIcon from '@mui/icons-material/Edit';
@@ -14,11 +14,30 @@ function Vehicles() {
   const [open, setOpen] = useState(false);
   const [open2, setOpen2] = useState(false);
   const [open3, setOpen3] = useState(false);
-  const [resutlVehicle, setResultVehicle] = useState({});
-  const [resutlVehicleCreate, setResultVehicleCreate] = useState({foto: 'Apague e cole a url da foto do veículo'});
+  const [resutlVehicle, setResultVehicle] = useState({
+    nome: "",
+    marca: "",
+    modelo: "",
+    valor: 0,
+    foto: "",
+  });
+  const [resutlVehicleCreate, setResultVehicleCreate] = useState({
+    nome: "",
+    marca: "",
+    modelo: "",
+    valor: 0,
+    foto: "",
+  });
   const [currentIdEdit, setCurrentIdEdit] = useState();
   const [openAlert, setOpenAlert] = useState(false);
   const { releaseIcons } = useContext(MyContext);
+  const [isDisableCreate, setisDisableCreate] = useState({
+    nome: false,
+    marca: true,
+    modelo: true,
+    valor: true,
+    foto: true,
+  });
 
   const fetchAllVehicle = async () => {
     const vheicles = await VehiclesServices.fetchAllVehicles();
@@ -76,7 +95,8 @@ function Vehicles() {
   }
 
   const handleValueCreate = ({ target }) => {
-    setResultVehicleCreate({ ...resutlVehicleCreate, [target.name]: target.value })
+    setResultVehicleCreate({ ...resutlVehicleCreate, [target.name]: target.value });
+    setisDisableCreate({ ...isDisableCreate, [target.id]: false })
     console.log(resutlVehicleCreate);
   }
 
@@ -109,6 +129,7 @@ function Vehicles() {
 
   const fetchCreateVehicle = async (e) => {
     e.preventDefault();
+    console.log(e);
     const { nome, marca, modelo, valor, foto } = resutlVehicleCreate;
     const obj = {
       nome: nome,
@@ -184,21 +205,21 @@ function Vehicles() {
   return (
     <Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
       {value.validIconCreate && <BoxCustom
-      onClick={runCreateVehicle}
-      sx={{
-        width: 305,
-        height: 287, p: "0 8 0 8",
-        boxShadow: 8, m: "0.4rem", mt: '1.3rem',
-        borderRadius: "0.375rem",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center"
-      }}>
-          <AddIcon sx={{color: "text.secondary", width: '30%', height: '100vh' }} />
+        onClick={runCreateVehicle}
+        sx={{
+          width: 305,
+          height: 287, p: "0 8 0 8",
+          boxShadow: 8, m: "0.4rem", mt: '1.3rem',
+          borderRadius: "0.375rem",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center"
+        }}>
+        <AddIcon sx={{ color: "text.secondary", width: '30%', height: '100vh' }} />
       </BoxCustom>}
       <Box sx={{ width: "67%", display: "flex", flexWrap: "wrap", justifyContent: "center", mt: '1rem' }}>
         {sortByValor().map((vehicle) => (
-          <Box sx={{
+          <Box key={`${vehicle.id}${vehicle.nome}`} sx={{
             width: 305,
             height: 287, p: "0 8 0 8",
             boxShadow: 8, m: "0.4rem",
@@ -207,7 +228,7 @@ function Vehicles() {
             flexDirection: "column",
             alignItems: "flex-start"
           }}>
-            <img src={vehicle.foto} alt={vehicle.nome} style={{ width: "305px" }} />
+            <img src={vehicle.foto} alt={vehicle.nome} style={{ width: "305px", height: "175.078px" }} />
             <Box sx={{
               width: "90%",
               height: "100vh",
@@ -252,57 +273,92 @@ function Vehicles() {
               variant='filled'
               required={true}
               type="text"
-              id="outlined-basic"
+              id="input-edit-nome"
               label="Nome"
               name="nome"
               onChange={e => handleValue(e)}
               value={resutlVehicle.nome}
               sx={{ m: "0.5rem" }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <EditIcon />
+                  </InputAdornment>
+                ),
+              }}
             />
             <TextField
               variant='filled'
               autoFocus
               required={true}
               type="text"
-              id="outlined-basic"
+              id="input-edit-marca"
               label="Marca"
               name="marca"
               onChange={e => handleValue(e)}
               value={resutlVehicle.marca}
               sx={{ m: "0.5rem" }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <EditIcon />
+                  </InputAdornment>
+                ),
+              }}
             />
             <TextField
               variant='filled'
               required={true}
               type="text"
-              id="outlined-basic"
+              id="input-edit-modelo"
               label="Modelo"
               name="modelo"
               onChange={e => handleValue(e)}
               value={resutlVehicle.modelo}
               sx={{ m: "0.5rem" }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <EditIcon />
+                  </InputAdornment>
+                ),
+              }}
             />
             <TextField
               variant='filled'
               required={true}
               type="number"
-              id="outlined-basic"
+              id="input-edit-valor"
               label="Valor"
               name="valor"
               onChange={e => handleValue(e)}
               value={resutlVehicle.valor}
               sx={{ m: "0.5rem" }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <EditIcon />
+                  </InputAdornment>
+                ),
+              }}
             />
             <TextField
               variant='filled'
               required={true}
               type="text"
-              id="outlined-basic"
+              id="input-edit-foto"
               label="URL da foto do veículo"
               name="foto"
               onChange={e => handleValue(e)}
               value={resutlVehicle.foto}
               sx={{ m: "0.5rem" }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <EditIcon />
+                  </InputAdornment>
+                ),
+              }}
             />
             <Box sx={{ textAlign: "right", m: "2rem 1rem 0rem 0rem" }}>
               <Button
@@ -339,57 +395,98 @@ function Vehicles() {
               variant='filled'
               required={true}
               type="text"
-              id="outlined-basic"
+              id="marca"
               label="Nome"
               name="nome"
               onChange={e => handleValueCreate(e)}
               value={resutlVehicleCreate.nome}
               sx={{ m: "0.5rem" }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <AddIcon />
+                  </InputAdornment>
+                ),
+              }}
             />
             <TextField
+              disabled={isDisableCreate.marca}
               variant='filled'
               autoFocus
               required={true}
               type="text"
-              id="outlined-basic"
+              id="modelo"
               label="Marca"
               name="marca"
               onChange={e => handleValueCreate(e)}
               value={resutlVehicleCreate.marca}
               sx={{ m: "0.5rem" }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <AddIcon />
+                  </InputAdornment>
+                ),
+              }}
             />
             <TextField
+              disabled={isDisableCreate.modelo}
               variant='filled'
               required={true}
               type="text"
-              id="outlined-basic"
+              id="foto"
               label="Modelo"
               name="modelo"
               onChange={e => handleValueCreate(e)}
               value={resutlVehicleCreate.modelo}
               sx={{ m: "0.5rem" }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <AddIcon />
+                  </InputAdornment>
+                ),
+              }}
             />
             <TextField
+              disabled={isDisableCreate.foto}
+              variant='filled'
+              required={true}
+              type="text"
+              id="valor"
+              label="URL da foto do veículo"
+              name="foto"
+              // onChange={e => handleValueCreate(e)}
+              // onPaste={e => handleValueCreate(e)}
+              onInput={e => handleValueCreate(e)}
+              value={resutlVehicleCreate.foto}
+              sx={{ m: "0.5rem" }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <AddIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
+            <TextField
+              disabled={isDisableCreate.valor}
               variant='filled'
               required={true}
               type="number"
-              id="outlined-basic"
+              id="input-valor"
               label="Valor"
               name="valor"
               onChange={e => handleValueCreate(e)}
               value={resutlVehicleCreate.valor}
               sx={{ m: "0.5rem" }}
-            />
-            <TextField
-              variant='filled'
-              required={true}
-              type="text"
-              id="outlined-basic"
-              label="URL da foto do veículo"
-              name="foto"
-              onChange={e => handleValueCreate(e)}
-              value={resutlVehicleCreate.foto}
-              sx={{ m: "0.5rem" }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <AddIcon />
+                  </InputAdornment>
+                ),
+              }}
             />
             <Box sx={{ textAlign: "right", m: "2rem 1rem 0rem 0rem" }}>
               <Button
@@ -406,7 +503,7 @@ function Vehicles() {
         open={open2}
       >
         <Box sx={{ width: "100%", height: "100vh" }} onClick={handleClose2} />
-        <Box sx={{ height: "415px", display: "flex", position: "fixed", boxShadow: 15, borderRadius: "10px 10px 10px 10px" }}>
+        <Box sx={{ height: "315px", display: "flex", position: "fixed", boxShadow: 15, borderRadius: "10px 10px 10px 10px" }}>
           <Box
             component="form"
             onSubmit={e => fetchDeleteVehicle(e)}

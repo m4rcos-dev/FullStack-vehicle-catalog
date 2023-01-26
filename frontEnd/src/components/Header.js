@@ -224,7 +224,7 @@ function Header() {
               error={emailIsValid}
               required={true}
               type="email"
-              id="outlined-basic"
+              id="input-email"
               label="Email"
               variant="standard"
               name="email"
@@ -236,7 +236,7 @@ function Header() {
               error={passwordIsValid}
               required={true}
               type="password"
-              id="outlined-basic"
+              id="input-password"
               label="Senha"
               variant="standard"
               name="password"
