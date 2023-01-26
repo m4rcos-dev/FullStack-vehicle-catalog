@@ -31,6 +31,13 @@ function Vehicles() {
   const [currentIdEdit, setCurrentIdEdit] = useState();
   const [openAlert, setOpenAlert] = useState(false);
   const { releaseIcons } = useContext(MyContext);
+  const [isDisableCreate, setisDisableCreate] = useState({
+    nome: false,
+    marca: true,
+    modelo: true,
+    valor: true,
+    foto: true,
+  });
 
   const fetchAllVehicle = async () => {
     const vheicles = await VehiclesServices.fetchAllVehicles();
@@ -88,7 +95,8 @@ function Vehicles() {
   }
 
   const handleValueCreate = ({ target }) => {
-    setResultVehicleCreate({ ...resutlVehicleCreate, [target.name]: target.value })
+    setResultVehicleCreate({ ...resutlVehicleCreate, [target.name]: target.value });
+    setisDisableCreate({ ...isDisableCreate, [target.id]: false })
     console.log(resutlVehicleCreate);
   }
 
@@ -387,7 +395,7 @@ function Vehicles() {
               variant='filled'
               required={true}
               type="text"
-              id="input-nome"
+              id="marca"
               label="Nome"
               name="nome"
               onChange={e => handleValueCreate(e)}
@@ -402,11 +410,12 @@ function Vehicles() {
               }}
             />
             <TextField
+              disabled={isDisableCreate.marca}
               variant='filled'
               autoFocus
               required={true}
               type="text"
-              id="input-marca"
+              id="modelo"
               label="Marca"
               name="marca"
               onChange={e => handleValueCreate(e)}
@@ -421,10 +430,11 @@ function Vehicles() {
               }}
             />
             <TextField
+              disabled={isDisableCreate.modelo}
               variant='filled'
               required={true}
               type="text"
-              id="input-modelo"
+              id="foto"
               label="Modelo"
               name="modelo"
               onChange={e => handleValueCreate(e)}
@@ -439,14 +449,17 @@ function Vehicles() {
               }}
             />
             <TextField
+              disabled={isDisableCreate.foto}
               variant='filled'
               required={true}
-              type="number"
-              id="input-valor"
-              label="Valor"
-              name="valor"
-              onChange={e => handleValueCreate(e)}
-              value={resutlVehicleCreate.valor}
+              type="text"
+              id="valor"
+              label="URL da foto do veículo"
+              name="foto"
+              // onChange={e => handleValueCreate(e)}
+              // onPaste={e => handleValueCreate(e)}
+              onInput={e => handleValueCreate(e)}
+              value={resutlVehicleCreate.foto}
               sx={{ m: "0.5rem" }}
               InputProps={{
                 startAdornment: (
@@ -457,16 +470,15 @@ function Vehicles() {
               }}
             />
             <TextField
+              disabled={isDisableCreate.valor}
               variant='filled'
               required={true}
-              type="text"
-              id="input-foto"
-              label="URL da foto do veículo"
-              name="foto"
-              // onChange={e => handleValueCreate(e)}
-              // onPaste={e => handleValueCreate(e)}
-              onInput={e => handleValueCreate(e)}
-              value={resutlVehicleCreate.foto}
+              type="number"
+              id="input-valor"
+              label="Valor"
+              name="valor"
+              onChange={e => handleValueCreate(e)}
+              value={resutlVehicleCreate.valor}
               sx={{ m: "0.5rem" }}
               InputProps={{
                 startAdornment: (
