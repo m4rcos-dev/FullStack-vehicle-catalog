@@ -1,4 +1,4 @@
-import { Alert, Backdrop, Box, Button, Snackbar, styled, TextField, Typography } from '@mui/material';
+import { Alert, Backdrop, Box, Button, InputAdornment, Snackbar, styled, TextField, Typography } from '@mui/material';
 import React, { useContext, useEffect, useState } from 'react'
 import VehiclesServices from '../services/VehiclesServices';
 import EditIcon from '@mui/icons-material/Edit';
@@ -207,7 +207,7 @@ function Vehicles() {
             flexDirection: "column",
             alignItems: "flex-start"
           }}>
-            <img src={vehicle.foto} alt={vehicle.nome} style={{ width: "305px" }} />
+            <img src={vehicle.foto} alt={vehicle.nome} style={{ width: "305px", height: "175.078px" }} />
             <Box sx={{
               width: "90%",
               height: "100vh",
@@ -258,6 +258,13 @@ function Vehicles() {
               onChange={e => handleValue(e)}
               value={resutlVehicle.nome}
               sx={{ m: "0.5rem" }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <EditIcon />
+                  </InputAdornment>
+                ),
+              }}
             />
             <TextField
               variant='filled'
@@ -270,6 +277,13 @@ function Vehicles() {
               onChange={e => handleValue(e)}
               value={resutlVehicle.marca}
               sx={{ m: "0.5rem" }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <EditIcon />
+                  </InputAdornment>
+                ),
+              }}
             />
             <TextField
               variant='filled'
@@ -281,6 +295,13 @@ function Vehicles() {
               onChange={e => handleValue(e)}
               value={resutlVehicle.modelo}
               sx={{ m: "0.5rem" }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <EditIcon />
+                  </InputAdornment>
+                ),
+              }}
             />
             <TextField
               variant='filled'
@@ -292,6 +313,13 @@ function Vehicles() {
               onChange={e => handleValue(e)}
               value={resutlVehicle.valor}
               sx={{ m: "0.5rem" }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <EditIcon />
+                  </InputAdornment>
+                ),
+              }}
             />
             <TextField
               variant='filled'
@@ -303,6 +331,13 @@ function Vehicles() {
               onChange={e => handleValue(e)}
               value={resutlVehicle.foto}
               sx={{ m: "0.5rem" }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <EditIcon />
+                  </InputAdornment>
+                ),
+              }}
             />
             <Box sx={{ textAlign: "right", m: "2rem 1rem 0rem 0rem" }}>
               <Button
@@ -345,6 +380,13 @@ function Vehicles() {
               onChange={e => handleValueCreate(e)}
               value={resutlVehicleCreate.nome}
               sx={{ m: "0.5rem" }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <AddIcon />
+                  </InputAdornment>
+                ),
+              }}
             />
             <TextField
               variant='filled'
@@ -357,6 +399,13 @@ function Vehicles() {
               onChange={e => handleValueCreate(e)}
               value={resutlVehicleCreate.marca}
               sx={{ m: "0.5rem" }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <AddIcon />
+                  </InputAdornment>
+                ),
+              }}
             />
             <TextField
               variant='filled'
@@ -368,6 +417,13 @@ function Vehicles() {
               onChange={e => handleValueCreate(e)}
               value={resutlVehicleCreate.modelo}
               sx={{ m: "0.5rem" }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <AddIcon />
+                  </InputAdornment>
+                ),
+              }}
             />
             <TextField
               variant='filled'
@@ -379,6 +435,13 @@ function Vehicles() {
               onChange={e => handleValueCreate(e)}
               value={resutlVehicleCreate.valor}
               sx={{ m: "0.5rem" }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <AddIcon />
+                  </InputAdornment>
+                ),
+              }}
             />
             <TextField
               variant='filled'
@@ -390,6 +453,13 @@ function Vehicles() {
               onChange={e => handleValueCreate(e)}
               value={resutlVehicleCreate.foto}
               sx={{ m: "0.5rem" }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <AddIcon />
+                  </InputAdornment>
+                ),
+              }}
             />
             <Box sx={{ textAlign: "right", m: "2rem 1rem 0rem 0rem" }}>
               <Button
