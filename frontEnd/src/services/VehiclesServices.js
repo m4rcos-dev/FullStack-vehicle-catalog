@@ -50,6 +50,19 @@ const VehiclesServices = {
     }
   },
 
+  fetchDeletetVehicle: async (id, token) => {
+    try {
+      const result = axios.delete(`${url}/Vehicle/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      return result.data;
+    } catch (error) {
+      return "Erro ao se conectar com o servidor"
+    }
+  },
+
   saveToken: (token) => {
     localStorage.setItem('authToken', token);
   },

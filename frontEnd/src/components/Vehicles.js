@@ -5,11 +5,13 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { MyContext } from '../context/MyContext';
 import { common } from '@mui/material/colors';
+import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 
 function Vehicles() {
   const [allVehicles, setAllVehicles] = useState([]);
   const { value } = useContext(MyContext);
   const [open, setOpen] = useState(false);
+  const [open2, setOpen2] = useState(false);
   const [resutlVehicle, setResultVehicle] = useState({});
   const [currentIdEdit, setCurrentIdEdit] = useState();
   const [openAlert, setOpenAlert] = useState(false);
@@ -22,20 +24,33 @@ function Vehicles() {
   useEffect(() => { fetchAllVehicle() }, []);
 
   const runEditVehicle = async (currentVheicle) => {
-    console.log(currentVheicle);
     const resultVehicle = await VehiclesServices.fetchAllOneVehicle(currentVheicle);
-    console.log(resultVehicle);
     setResultVehicle(resultVehicle);
     setCurrentIdEdit(currentVheicle);
     handleToggle();
   }
 
+  const runDeleteVehicle = async (currentVheicle) => {
+    console.log(currentVheicle);
+    setCurrentIdEdit(currentVheicle);
+    handleToggle2();
+  };
+
   const handleClose = () => {
     setOpen(false);
   };
 
+  const handleClose2 = () => {
+    setOpen2(false);
+  };
+
+
   const handleToggle = () => {
     setOpen(!open);
+  };
+
+  const handleToggle2 = () => {
+    setOpen2(!open);
   };
 
   const handleValue = ({ target }) => {
@@ -61,10 +76,19 @@ function Vehicles() {
     return result;
   };
 
+  const fetchDeleteVehicle = async (e) => {
+    e.preventDefault();
+    const token = VehiclesServices.getToken();
+    const result = await VehiclesServices.fetchDeletetVehicle(currentIdEdit, token);
+    handleToggle2();
+    window.location.reload();
+    return result;
+  };
+
   const handleClickAlert = () => {
     setOpenAlert(true);
   };
- const handleCloseAlert = (event, reason) => {
+  const handleCloseAlert = (event, reason) => {
     if (reason === 'clickaway') {
       return;
     }
@@ -118,7 +142,7 @@ function Vehicles() {
               <Typography variant='h6' color="primary">{vehicle.valor.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</Typography>
               <Box sx={{ width: "100%", textAlign: "right" }}>
                 {value.validIconsEdit && <EditIconCustom onClick={() => runEditVehicle(vehicle.id)} color="primary" fontSize='medium' sx={{ m: "0rem 0rem 0.5rem 0rem", }} />}
-                {value.validIconsDelete && <DeleteIconCustom color="error" fontSize='medium' sx={{ m: "0rem 0.3rem 0.5rem 0.3rem" }} />}
+                {value.validIconsDelete && <DeleteIconCustom onClick={() => runDeleteVehicle(vehicle.id)} color="error" fontSize='medium' sx={{ m: "0rem 0.3rem 0.5rem 0.3rem" }} />}
               </Box>
             </Box>
           </Box>
@@ -207,6 +231,40 @@ function Vehicles() {
                 onClick={handleClose}
               >Cancelar</Button>
               <Button type="submit">OK</Button>
+            </Box>
+          </Box>
+        </Box>
+      </Backdrop>
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 0 }}
+        open={open2}
+      >
+        <Box sx={{ width: "100%", height: "100vh" }} onClick={handleClose2} />
+        <Box sx={{ height: "415px", display: "flex", position: "fixed", boxShadow: 15, borderRadius: "10px 10px 10px 10px" }}>
+          <Box
+            component="form"
+            onSubmit={e => fetchDeleteVehicle(e)}
+            sx={{
+              width: 450,
+              height: 315,
+              backgroundColor: "common.white",
+              borderRadius: "10px",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center"
+            }}
+          >
+            <Box>
+              <ReportProblemIcon sx={{ textAlign: 'center', fontSize: 100 }} color='warning' />
+            </Box>
+            <Typography sx={{ m: "0.5rem", textAlign: "center" }} color={common.black} variant="h5">Olá!</Typography>
+            <Typography sx={{ m: "0.5rem", textAlign: "center" }} color={common.black} variant="h7">Tem certeza que deseja deletar esse veículo?</Typography>
+            <Box sx={{ textAlign: "right", m: "2rem 1rem 0rem 0rem" }}>
+              <Button
+                type="button"
+                onClick={handleClose2}
+              >Cancelar</Button>
+              <Button type="submit">SIM</Button>
             </Box>
           </Box>
         </Box>
