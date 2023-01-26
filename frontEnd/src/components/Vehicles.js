@@ -29,7 +29,11 @@ function Vehicles() {
     foto: "",
   });
   const [currentIdEdit, setCurrentIdEdit] = useState();
-  const [openAlert, setOpenAlert] = useState(false);
+  const [openAlert, setOpenAlert] = useState({
+    type: 'success',
+    message: '',
+    isOpen: false,
+  });
   const { releaseIcons } = useContext(MyContext);
   const [isDisableCreate, setisDisableCreate] = useState({
     nome: false,
@@ -112,8 +116,13 @@ function Vehicles() {
     }
     const token = VehiclesServices.getToken();
     const result = await VehiclesServices.fetchEditVehicle(currentIdEdit, obj, token);
+    console.log(result);
+    if (result !== "Vehicle update sucess!") {
+      handleClickAlert("error", "Erro ao se conectar com o servidor", true);
+      return;
+    }
+    handleClickAlert("success", "Veículo editado com sucesso", true);
     handleClose();
-    handleClickAlert();
     window.location.reload();
     return result;
   };
@@ -122,14 +131,18 @@ function Vehicles() {
     e.preventDefault();
     const token = VehiclesServices.getToken();
     const result = await VehiclesServices.fetchDeletetVehicle(currentIdEdit, token);
-    handleToggle2();
+    if (result !== "Vehicle deleting sucess!") {
+      handleClickAlert("error", "Erro ao se conectar com o servidor", true);
+      return;
+    }
+    handleClickAlert("success", "Veículo deletado com sucesso", true);
+    handleClose2();
     window.location.reload();
     return result;
   };
 
   const fetchCreateVehicle = async (e) => {
     e.preventDefault();
-    console.log(e);
     const { nome, marca, modelo, valor, foto } = resutlVehicleCreate;
     const obj = {
       nome: nome,
@@ -140,7 +153,13 @@ function Vehicles() {
     }
     const token = VehiclesServices.getToken();
     const result = await VehiclesServices.fetchCreateVehicle(obj, token);
-    handleClose();
+    console.log(result);
+    if (result !== "Vehicle addd sucess!") {
+      handleClickAlert("error", "Erro ao se conectar com o servidor", true);
+      return;
+    }
+    handleClickAlert("success", "Veículo adicionado com sucesso", true);
+    handleClose3();
     window.location.reload();
     return result;
   };
@@ -158,9 +177,10 @@ function Vehicles() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => { validTokenLocal() }, [])
 
-  const handleClickAlert = () => {
-    setOpenAlert(true);
+  const handleClickAlert = (type, message, isOpen) => {
+    setOpenAlert({type: type, message: message, isOpen: isOpen});
   };
+
   const handleCloseAlert = (event, reason) => {
     if (reason === 'clickaway') {
       return;
@@ -532,9 +552,9 @@ function Vehicles() {
           </Box>
         </Box>
       </Backdrop>
-      <Snackbar open={openAlert} autoHideDuration={6000} onClose={handleCloseAlert}>
-        <Alert onClose={handleCloseAlert} severity="success" sx={{ width: '100%' }}>
-          Cadastro alterado com sucesso!
+      <Snackbar open={openAlert.isOpen} autoHideDuration={6000} onClose={handleCloseAlert}>
+        <Alert onClose={handleCloseAlert} severity={openAlert.type} sx={{ width: '100%' }}>
+          {openAlert.message}
         </Alert>
       </Snackbar>
     </Box>

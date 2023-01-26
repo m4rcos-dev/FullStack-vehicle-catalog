@@ -8,6 +8,7 @@ const VehiclesServices = {
       const vehicles = await axios.get(`${url}/Vehicle`);
       return vehicles.data;
     } catch (error) {
+      console.log(error);
       return "Erro ao se conectar com o servidor"
     }
   },
@@ -33,45 +34,49 @@ const VehiclesServices = {
       const vehicles = await axios.get(`${url}/Vehicle/${id}`)
       return vehicles.data;
     } catch (error) {
+      console.log(error);
       return "Erro ao se conectar com o servidor"
     }
   },
 
   fetchEditVehicle: async (id, objeto, token) => {
     try {
-      const result = axios.put(`${url}/Vehicle/${id}`, objeto, {
+      const result = await axios.put(`${url}/Vehicle/${id}`, objeto, {
         headers: {
           Authorization: `Bearer ${token}`
         }
       });
       return result.data;
     } catch (error) {
+      console.log(error);
       return "Erro ao se conectar com o servidor"
     }
   },
 
   fetchDeletetVehicle: async (id, token) => {
     try {
-      const result = axios.delete(`${url}/Vehicle/${id}`, {
+      const result = await axios.delete(`${url}/Vehicle/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
       });
       return result.data;
     } catch (error) {
+      console.log(error);
       return "Erro ao se conectar com o servidor"
     }
   },
 
   fetchCreateVehicle: async (objeto, token) => {
     try {
-      const result = axios.post(`${url}/Vehicle`, objeto, {
+      const result = await axios.post(`${url}/Vehicle`, objeto, {
         headers: {
           Authorization: `Bearer ${token}`
         }
       });
-      return result.data;
+      return result.data
     } catch (error) {
+      console.log(error);
       return "Erro ao se conectar com o servidor"
     }
   },
