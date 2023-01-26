@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import AppBar from '@mui/material/AppBar';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import Slide from '@mui/material/Slide';
-import { Autocomplete, Backdrop, Box, Button, Link, Stack, TextField, Toolbar, Typography } from '@mui/material';
+import { Alert, AlertTitle, Autocomplete, Backdrop, Box, Button, Link, Stack, TextField, Toolbar, Typography } from '@mui/material';
 import { common } from '@mui/material/colors';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import VehiclesServices from '../services/VehiclesServices';
@@ -34,8 +34,7 @@ function Header() {
 
     const validPassword = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[0-9])(?=.{8,})/;
     const isValidP = validPassword.test(value.password);
-    setPasswordIsvalid(!isValidP)
-
+    setPasswordIsvalid(!isValidP);
   }
 
   const login = async (e) => {
@@ -106,7 +105,7 @@ function Header() {
             freeSolo
             id="free-solo-2-demo"
             disableClearable
-            options={top100Films.map((option) => option.nome)}
+            options={allVehicles.map((option) => option.nome)}
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -194,58 +193,7 @@ function Header() {
             </Box>
           </Box>
         </Box>
-
       </Backdrop>
-      {/* <DialogCustom open={open} onClose={handleClose}>
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            <img style={{ width: "300px" }} src='https://cdn.buttercms.com/PNF2L0j5R8G5eoOGHzwA' alt='img-login' />
-            <Box>
-              <DialogTitle variant='h4'>Olá</DialogTitle>
-              <DialogContent>
-                <DialogContentText>
-                  Insira seu e-mail e senha abaixo para iniciar sua sessão!
-                </DialogContentText>
-                <FormControl type="submit" onSubmit={e => subitInputsLogin(e)} sx={{ m: 1, }} variant="filled" fullWidth>
-                  <InputLabel htmlFor="standard-adornment-password">E-mail</InputLabel>
-                  <FilledInput
-                    id="standard-adornment-password"
-                    type="text"
-                    autoFocus
-                    margin="dense"
-                    label="E-mail"
-                    variant="standard"
-                  />
-                </FormControl>
-                <FormControl sx={{ m: 1, }} variant="filled" fullWidth>
-                  <InputLabel htmlFor="standard-adornment-password">Senha</InputLabel>
-                  <FilledInput
-                    id="standard-adornment-password"
-                    type={showPassword ? 'text' : 'password'}
-                    endAdornment={
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={handleClickShowPassword}
-                          onMouseDown={handleMouseDownPassword}
-                        >
-                          {showPassword ? <VisibilityOff /> : <Visibility />}
-                        </IconButton>
-                      </InputAdornment>
-                    }
-                    autoFocus
-                    margin="dense"
-                    label="Senha"
-                    variant="standard"
-                  />
-                </FormControl>
-              </DialogContent>
-              <DialogActions>
-                <Button type="button" onClick={handleClose}>Cancelar</Button>
-                <Button type="submit" onClick={handleClose}>Login</Button>
-              </DialogActions>
-            </Box>
-          </Box>
-        </DialogCustom> */}
     </div >
   )
 }
@@ -253,19 +201,5 @@ function Header() {
 HideOnScroll.propTypes = {
   children: PropTypes.element.isRequired,
 };
-
-const top100Films = [
-  { title: 'The Shawshank Redemption', year: 1994 },
-  { title: 'The Godfather', year: 1972 },
-  { title: 'The Godfather: Part II', year: 1974 },
-  { title: 'The Dark Knight', year: 2008 },
-  { title: '12 Angry Men', year: 1957 },
-  { title: "Schindler's List", year: 1993 },
-  { title: 'Pulp Fiction', year: 1994 },
-  {
-    title: 'The Lord of the Rings: The Return of the King',
-    year: 2003,
-  },
-]
 
 export default Header;
