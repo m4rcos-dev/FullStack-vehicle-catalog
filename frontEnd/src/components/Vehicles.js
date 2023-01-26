@@ -16,7 +16,6 @@ function Vehicles() {
 
 
   useEffect(() => { fetchAllVehicle() }, [])
-  console.log(allVehicles);
 
   // const DialogCustom = styled(Dialog)(({ theme }) => ({
   //   '& .css-1t1j96h-MuiPaper-root-MuiDialog-paper': {

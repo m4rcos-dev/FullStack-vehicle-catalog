@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react'
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useContext, useEffect, useState } from 'react'
 import PropTypes from 'prop-types';
 import AppBar from '@mui/material/AppBar';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import Slide from '@mui/material/Slide';
-import { Alert, AlertTitle, Autocomplete, Backdrop, Box, Button, Link, Stack, TextField, Toolbar, Typography } from '@mui/material';
+import { Alert, Autocomplete, Backdrop, Box, Button, Link, Snackbar, Stack, TextField, Toolbar, Typography } from '@mui/material';
 import { common } from '@mui/material/colors';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import VehiclesServices from '../services/VehiclesServices';
+import { MyContext } from '../context/MyContext';
 
 function HideOnScroll(props) {
   const { children } = props;
@@ -21,10 +23,15 @@ function HideOnScroll(props) {
 
 function Header() {
   const [allVehicles, setAllVehicles] = useState([]);
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const [value, setvalue] = useState({ email: "", password: "" })
   const [emailIsValid, setEmailIsValid] = useState();
   const [passwordIsValid, setPasswordIsvalid] = useState();
+  const [openAlert, setOpenAlert] = useState(false);
+  const [openAlertError, setOpenAlertError] = useState(false)
+  const { releaseIcons } = useContext(MyContext);
+  const [titleLogin, setTitleLogin] = useState(true);
+  const [loginResultError, setLoginResultError] = useState("Usuário ou senha inválidos");
 
   const handleValue = ({ target }) => {
     setvalue({ ...value, [target.name]: target.value })
@@ -40,8 +47,47 @@ function Header() {
   const login = async (e) => {
     e.preventDefault();
     const loginResult = await VehiclesServices.fetchLogin(value.email, value.password);
-    console.log(loginResult);
+    if (loginResult === "Usuário ou senha inválidos" || loginResult === "Erro ao se conectar com o servidor") {
+      setLoginResultError(loginResult)
+      handleClickAlertError();
+      return;
+    }
+    VehiclesServices.saveToken(loginResult);
+    handleClose();
+    handleClickAlert();
+    releaseIcons(true);
+    setTitleLogin(false);
+    return;
+
+  };
+
+  const LogOff = () => {
+    VehiclesServices.removeToken();
+    setTitleLogin(true);
+    window.location.reload()
   }
+
+  const handleClickAlert = () => {
+    setOpenAlert(true);
+  };
+
+  const handleClickAlertError = () => {
+    setOpenAlertError(true);
+  };
+
+  const handleCloseAlert = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenAlert(false);
+  };
+
+  const handleCloseAlertError = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenAlertError(false);
+  };
 
   const handleClose = () => {
     setOpen(false);
@@ -56,13 +102,19 @@ function Header() {
     setAllVehicles(vheicles);
   }
 
-  useEffect(() => { fetchAllVehicle() }, [])
+  const validTokenLocal = () => {
+    const currentToken = VehiclesServices.getToken();
+    if (currentToken === null) {
+      releaseIcons(false);
+      setTitleLogin(true);
+      return;
+    }
+    releaseIcons(true);
+    setTitleLogin(false);
+  }
 
-  // const DialogCustom = styled(Dialog)(({ theme }) => ({
-  //   '& .css-1t1j96h-MuiPaper-root-MuiDialog-paper': {
-  //     maxWidth: "800px",
-  //   }
-  // }));
+  useEffect(() => { fetchAllVehicle() }, [])
+  useEffect(() => { validTokenLocal() }, [])
 
   return (
     <div>
@@ -88,11 +140,16 @@ function Header() {
             }}>
               <svg viewBox="0 0 7774 2048"><path d="M7296.82.052L6752.798 1024l544.022 1023.948h477.424L7239.034 1024 7774.244.052zm-1130.746 0v1705.534L5275.298.052 4205.476 2047.954h470.514l599.916-1147.71 254.406 487.47h-254.406l-178.412 341.108h611.236l166.464 319.132h726.816V.052h-435.96zm-1767.734 0l-599.916 1147.71L3199.138.052h-470.514l1069.822 2047.902L4868.268.052H4398.39zm-2076.172 0l-892.04 1707.424L1072.7 1024 1607.91.052h-477.424L586.464 1024l544.022 1023.948h593.006l166.464-319.132h611.236l-178.412-341.108h-254.406l254.406-487.47 598.678 1147.71h470.514L2322.15.046zM-.244 2047.952h435.33V.05H-.244z"></path></svg>
             </Box>
-            <Link href="#" underline="none" onClick={handleToggle}
+            {titleLogin && <Link href="#" underline="none" onClick={handleToggle}
               sx={{ display: 'flex', alignItems: 'center', color: common.black }}>
               <AccountCircleOutlinedIcon fontSize='large' sx={{ color: common.black, margin: '0.5rem 0.5rem' }} />
               <Typography>Login</Typography>
-            </Link>
+            </Link>}
+            {!titleLogin && <Link href="#" underline="none" onClick={LogOff}
+              sx={{ display: 'flex', alignItems: 'center', color: common.black }}>
+              <AccountCircleOutlinedIcon fontSize='large' sx={{ color: common.black, margin: '0.5rem 0.5rem' }} />
+              <Typography>Sair</Typography>
+            </Link>}
           </Toolbar>
 
         </AppBar>
@@ -194,6 +251,16 @@ function Header() {
           </Box>
         </Box>
       </Backdrop>
+      <Snackbar open={openAlert} autoHideDuration={6000} onClose={handleCloseAlert}>
+        <Alert onClose={handleCloseAlert} severity="success" sx={{ width: '100%' }}>
+          Boas Vindas!
+        </Alert>
+      </Snackbar>
+      <Snackbar open={openAlertError} autoHideDuration={6000} onClose={handleCloseAlertError}>
+        <Alert onClose={handleCloseAlertError} severity="error" sx={{ width: '100%' }}>
+          {loginResultError}
+        </Alert>
+      </Snackbar>
     </div >
   )
 }
