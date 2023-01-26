@@ -14,8 +14,20 @@ function Vehicles() {
   const [open, setOpen] = useState(false);
   const [open2, setOpen2] = useState(false);
   const [open3, setOpen3] = useState(false);
-  const [resutlVehicle, setResultVehicle] = useState({});
-  const [resutlVehicleCreate, setResultVehicleCreate] = useState({foto: 'Apague e cole a url da foto do veículo'});
+  const [resutlVehicle, setResultVehicle] = useState({
+    nome: "",
+    marca: "",
+    modelo: "",
+    valor: 0,
+    foto: "",
+  });
+  const [resutlVehicleCreate, setResultVehicleCreate] = useState({
+    nome: "",
+    marca: "",
+    modelo: "",
+    valor: 0,
+    foto: "",
+  });
   const [currentIdEdit, setCurrentIdEdit] = useState();
   const [openAlert, setOpenAlert] = useState(false);
   const { releaseIcons } = useContext(MyContext);
@@ -109,6 +121,7 @@ function Vehicles() {
 
   const fetchCreateVehicle = async (e) => {
     e.preventDefault();
+    console.log(e);
     const { nome, marca, modelo, valor, foto } = resutlVehicleCreate;
     const obj = {
       nome: nome,
@@ -184,21 +197,21 @@ function Vehicles() {
   return (
     <Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
       {value.validIconCreate && <BoxCustom
-      onClick={runCreateVehicle}
-      sx={{
-        width: 305,
-        height: 287, p: "0 8 0 8",
-        boxShadow: 8, m: "0.4rem", mt: '1.3rem',
-        borderRadius: "0.375rem",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center"
-      }}>
-          <AddIcon sx={{color: "text.secondary", width: '30%', height: '100vh' }} />
+        onClick={runCreateVehicle}
+        sx={{
+          width: 305,
+          height: 287, p: "0 8 0 8",
+          boxShadow: 8, m: "0.4rem", mt: '1.3rem',
+          borderRadius: "0.375rem",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center"
+        }}>
+        <AddIcon sx={{ color: "text.secondary", width: '30%', height: '100vh' }} />
       </BoxCustom>}
       <Box sx={{ width: "67%", display: "flex", flexWrap: "wrap", justifyContent: "center", mt: '1rem' }}>
         {sortByValor().map((vehicle) => (
-          <Box sx={{
+          <Box key={`${vehicle.id}${vehicle.nome}`} sx={{
             width: 305,
             height: 287, p: "0 8 0 8",
             boxShadow: 8, m: "0.4rem",
@@ -252,7 +265,7 @@ function Vehicles() {
               variant='filled'
               required={true}
               type="text"
-              id="outlined-basic"
+              id="input-edit-nome"
               label="Nome"
               name="nome"
               onChange={e => handleValue(e)}
@@ -271,7 +284,7 @@ function Vehicles() {
               autoFocus
               required={true}
               type="text"
-              id="outlined-basic"
+              id="input-edit-marca"
               label="Marca"
               name="marca"
               onChange={e => handleValue(e)}
@@ -289,7 +302,7 @@ function Vehicles() {
               variant='filled'
               required={true}
               type="text"
-              id="outlined-basic"
+              id="input-edit-modelo"
               label="Modelo"
               name="modelo"
               onChange={e => handleValue(e)}
@@ -307,7 +320,7 @@ function Vehicles() {
               variant='filled'
               required={true}
               type="number"
-              id="outlined-basic"
+              id="input-edit-valor"
               label="Valor"
               name="valor"
               onChange={e => handleValue(e)}
@@ -325,7 +338,7 @@ function Vehicles() {
               variant='filled'
               required={true}
               type="text"
-              id="outlined-basic"
+              id="input-edit-foto"
               label="URL da foto do veículo"
               name="foto"
               onChange={e => handleValue(e)}
@@ -374,7 +387,7 @@ function Vehicles() {
               variant='filled'
               required={true}
               type="text"
-              id="outlined-basic"
+              id="input-nome"
               label="Nome"
               name="nome"
               onChange={e => handleValueCreate(e)}
@@ -393,7 +406,7 @@ function Vehicles() {
               autoFocus
               required={true}
               type="text"
-              id="outlined-basic"
+              id="input-marca"
               label="Marca"
               name="marca"
               onChange={e => handleValueCreate(e)}
@@ -411,7 +424,7 @@ function Vehicles() {
               variant='filled'
               required={true}
               type="text"
-              id="outlined-basic"
+              id="input-modelo"
               label="Modelo"
               name="modelo"
               onChange={e => handleValueCreate(e)}
@@ -429,7 +442,7 @@ function Vehicles() {
               variant='filled'
               required={true}
               type="number"
-              id="outlined-basic"
+              id="input-valor"
               label="Valor"
               name="valor"
               onChange={e => handleValueCreate(e)}
@@ -447,10 +460,12 @@ function Vehicles() {
               variant='filled'
               required={true}
               type="text"
-              id="outlined-basic"
+              id="input-foto"
               label="URL da foto do veículo"
               name="foto"
-              onChange={e => handleValueCreate(e)}
+              // onChange={e => handleValueCreate(e)}
+              // onPaste={e => handleValueCreate(e)}
+              onInput={e => handleValueCreate(e)}
               value={resutlVehicleCreate.foto}
               sx={{ m: "0.5rem" }}
               InputProps={{
@@ -476,7 +491,7 @@ function Vehicles() {
         open={open2}
       >
         <Box sx={{ width: "100%", height: "100vh" }} onClick={handleClose2} />
-        <Box sx={{ height: "415px", display: "flex", position: "fixed", boxShadow: 15, borderRadius: "10px 10px 10px 10px" }}>
+        <Box sx={{ height: "315px", display: "flex", position: "fixed", boxShadow: 15, borderRadius: "10px 10px 10px 10px" }}>
           <Box
             component="form"
             onSubmit={e => fetchDeleteVehicle(e)}
