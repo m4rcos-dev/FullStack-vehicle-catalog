@@ -5,10 +5,11 @@ export function MyProvider({ children }) {
   const [value, setValue] = useState({
     validIconsEdit: false,
     validIconsDelete: false,
+    validIconCreate: false,
   });
 
   const releaseIcons = (validation) => {
-    setValue({validIconsEdit: validation, validIconsDelete: validation})
+    setValue({validIconsEdit: validation, validIconsDelete: validation, validIconCreate: validation})
   }
 
   return (

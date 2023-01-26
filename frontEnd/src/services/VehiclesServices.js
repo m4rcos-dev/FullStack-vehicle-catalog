@@ -63,6 +63,19 @@ const VehiclesServices = {
     }
   },
 
+  fetchCreateVehicle: async (objeto, token) => {
+    try {
+      const result = axios.post(`${url}/Vehicle/`, objeto, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      return result.data;
+    } catch (error) {
+      return "Erro ao se conectar com o servidor"
+    }
+  },
+
   saveToken: (token) => {
     localStorage.setItem('authToken', token);
   },
