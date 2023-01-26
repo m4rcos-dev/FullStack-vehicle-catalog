@@ -28,6 +28,20 @@ const VehiclesServices = {
     }
   },
 
+  fetchAllOneVehicle: async (id) => {
+    try {
+      const vehicles = await axios.get(`${url}/Vehicle`,
+      {
+        params: {
+          id: id
+        }
+      });
+      return vehicles.data;
+    } catch (error) {
+      return "Erro ao se conectar com o servidor"
+    }
+  },
+
   saveToken: (token) => {
     localStorage.setItem('authToken', token);
   },

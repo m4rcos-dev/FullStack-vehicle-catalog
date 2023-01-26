@@ -7,12 +7,12 @@ import { MyContext } from '../context/MyContext';
 
 function Vehicles() {
   const [allVehicles, setAllVehicles] = useState([]);
-  const {value} = useContext(MyContext)
+  const { value } = useContext(MyContext)
 
   const fetchAllVehicle = async () => {
     const vheicles = await VehiclesServices.fetchAllVehicles();
     setAllVehicles(vheicles);
-  }
+  };
 
 
   useEffect(() => { fetchAllVehicle() }, [])
