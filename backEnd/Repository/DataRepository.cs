@@ -13,34 +13,51 @@ namespace backEnd.Repository
       _context = context;
     }
 
-    public async Task<IEnumerable<Vehicle>> SearchVehicles()
+    public async Task<List<Vehicle>> SearchVehicles()
     {
       return await _context.Vehicles.ToListAsync();
     }
 
     public async Task<Vehicle> SearchVehicle(int id)
     {
-      return await _context.Vehicles.Where(x => x.Id == id).FirstOrDefaultAsync();
+      return await _context.Vehicles.FirstOrDefaultAsync(x => x.Id == id);
     }
 
-    public void CreateVehicle(Vehicle vehicle)
+    public async Task<Vehicle> CreateVehicle(Vehicle vehicle)
     {
-      _context.Add(vehicle);
+      await _context.Vehicles.AddAsync(vehicle);
+      await _context.SaveChangesAsync();
+
+      return vehicle;
     }
 
-    public void UpdateVehicle(Vehicle vehicle)
+    public async Task<Vehicle> UpdateVehicle(Vehicle vehicle, int id)
     {
-      _context.Update(vehicle);
+      var vehicleDb = await SearchVehicle(id);
+
+      if (vehicleDb == null) throw new Exception("Vheicle Not Found");
+
+      vehicleDb.Nome = vehicle.Nome ?? vehicleDb.Nome;
+      vehicleDb.Marca = vehicle.Marca ?? vehicleDb.Marca;
+      vehicleDb.Modelo = vehicle.Modelo ?? vehicleDb.Modelo;
+      vehicleDb.Valor = vehicle.Valor != vehicleDb.Valor ? vehicle.Valor : vehicleDb.Valor;
+      vehicleDb.Foto = vehicle.Foto ?? vehicleDb.Foto;
+
+      _context.Vehicles.Update(vehicleDb);
+      await _context.SaveChangesAsync();
+
+      return vehicleDb;
     }
 
-    public void DeleteVehicle(Vehicle vehicle)
+    public async Task<bool> DeleteVehicle(int id)
     {
-      _context.Remove(vehicle);
-    }
+      var vehicleDb = await SearchVehicle(id);
+      if (vehicleDb == null) throw new Exception("Vheicle Not Found");
 
-    public async Task<bool> SaveChangeAsync()
-    {
-      return await _context.SaveChangesAsync() > 0;
+      _context.Vehicles.Remove(vehicleDb);
+      await _context.SaveChangesAsync();
+
+      return true;
     }
   }
 }

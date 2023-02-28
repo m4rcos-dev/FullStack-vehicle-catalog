@@ -4,12 +4,10 @@ namespace backEnd.Repository
 {
   public interface IDataRepository
   {
-    Task<IEnumerable<Vehicle>> SearchVehicles();
+    Task<List<Vehicle>> SearchVehicles();
     Task<Vehicle> SearchVehicle(int id);
-    void CreateVehicle(Vehicle vehicle);
-    void UpdateVehicle(Vehicle vehicle);
-    void DeleteVehicle(Vehicle vehicle);
-
-    Task<bool> SaveChangeAsync();
+    Task<Vehicle> CreateVehicle(Vehicle vehicle);
+    Task<Vehicle> UpdateVehicle(Vehicle vehicle, int id);
+    Task<bool> DeleteVehicle(int id);
   }
 }
