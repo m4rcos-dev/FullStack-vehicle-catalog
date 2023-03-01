@@ -1,6 +1,5 @@
+using backEnd.Interfaces;
 using backEnd.Model;
-using backEnd.Repository;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backEnd.Controllers
@@ -11,24 +10,24 @@ namespace backEnd.Controllers
 
   public class VehicleController : ControllerBase
   {
-    private readonly IDataRepository _repository;
+    private readonly IDataServices _services;
 
-    public VehicleController(IDataRepository repository)
+    public VehicleController(IDataServices repository)
     {
-      _repository = repository;
+      _services = repository;
     }
 
     [HttpGet]
     public async Task<IActionResult> Get()
     {
-      var vehicles = await _repository.SearchVehicles();
+      var vehicles = await _services.SearchVehicles();
       return Ok(vehicles);
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(int id)
     {
-      var vehicle = await _repository.SearchVehicle(id);
+      var vehicle = await _services.SearchVehicle(id);
       return Ok(vehicle);
     }
 
@@ -37,7 +36,7 @@ namespace backEnd.Controllers
     [HttpPost]
     public async Task<IActionResult> Post(Vehicle vehicle)
     {
-      await _repository.CreateVehicle(vehicle);
+      await _services.CreateVehicle(vehicle);
       return Ok("Vehicle addd sucess!");
     }
 
@@ -46,7 +45,7 @@ namespace backEnd.Controllers
 
     public async Task<IActionResult> Put(int id, Vehicle vehicle)
     {
-      await _repository.UpdateVehicle(vehicle, id);
+      await _services.UpdateVehicle(vehicle, id);
       return Ok("Vehicle update sucess!");
     }
 
@@ -54,7 +53,7 @@ namespace backEnd.Controllers
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
-      await _repository.DeleteVehicle(id);
+      await _services.DeleteVehicle(id);
       return Ok("Vehicle deleting sucess!");
     }
   }

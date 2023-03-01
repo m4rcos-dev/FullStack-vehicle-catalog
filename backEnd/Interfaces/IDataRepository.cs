@@ -1,13 +1,13 @@
 using backEnd.Model;
 
-namespace backEnd.Repository
+namespace backEnd.Repository.Interfaces
 {
   public interface IDataRepository
   {
     Task<List<Vehicle>> SearchVehicles();
     Task<Vehicle> SearchVehicle(int id);
     Task<Vehicle> CreateVehicle(Vehicle vehicle);
-    Task<Vehicle> UpdateVehicle(Vehicle vehicle, int id);
-    Task<bool> DeleteVehicle(int id);
+    Task<Vehicle> UpdateVehicle(Vehicle vehicle);
+    Task<bool> DeleteVehicle(Vehicle vehicle);
   }
 }

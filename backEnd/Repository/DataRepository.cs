@@ -1,5 +1,6 @@
 using backEnd.Data;
 using backEnd.Model;
+using backEnd.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace backEnd.Repository
@@ -31,30 +32,17 @@ namespace backEnd.Repository
       return vehicle;
     }
 
-    public async Task<Vehicle> UpdateVehicle(Vehicle vehicle, int id)
+    public async Task<Vehicle> UpdateVehicle(Vehicle vehicle)
     {
-      var vehicleDb = await SearchVehicle(id);
-
-      if (vehicleDb == null) throw new Exception("Vheicle Not Found");
-
-      vehicleDb.Nome = vehicle.Nome ?? vehicleDb.Nome;
-      vehicleDb.Marca = vehicle.Marca ?? vehicleDb.Marca;
-      vehicleDb.Modelo = vehicle.Modelo ?? vehicleDb.Modelo;
-      vehicleDb.Valor = vehicle.Valor != vehicleDb.Valor ? vehicle.Valor : vehicleDb.Valor;
-      vehicleDb.Foto = vehicle.Foto ?? vehicleDb.Foto;
-
-      _context.Vehicles.Update(vehicleDb);
+      _context.Vehicles.Update(vehicle);
       await _context.SaveChangesAsync();
 
-      return vehicleDb;
+      return vehicle;
     }
 
-    public async Task<bool> DeleteVehicle(int id)
+    public async Task<bool> DeleteVehicle(Vehicle vehicle)
     {
-      var vehicleDb = await SearchVehicle(id);
-      if (vehicleDb == null) throw new Exception("Vheicle Not Found");
-
-      _context.Vehicles.Remove(vehicleDb);
+      _context.Vehicles.Remove(vehicle);
       await _context.SaveChangesAsync();
 
       return true;
