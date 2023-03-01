@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace backEnd.Model
 {
   public class Vehicle
@@ -14,14 +16,19 @@ namespace backEnd.Model
     }
     public int Id { get; set; }
 
+    [Required(ErrorMessage = "The field {0} is required")]
     public string Nome { get; set; }
 
+    [Required(ErrorMessage = "The field {0} is required")]
     public string Marca { get; set; }
 
+    [Required(ErrorMessage = "The field {0} is required")]
     public string Modelo { get; set; }
 
+    [Required(ErrorMessage = "The field {0} is required")]
     public int Valor { get; set; }
 
+    [Required(ErrorMessage = "The field {0} is required")]
     public string Foto { get; set; }
   }
 }
