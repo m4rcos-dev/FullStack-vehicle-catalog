@@ -17,23 +17,18 @@ namespace backEnd.Model
     public int Id { get; set; }
 
     [Required(ErrorMessage = "The field {0} is required")]
-    [StringLength(100, ErrorMessage = "The field {0} must be between {2} and {1} characters", MinimumLength = 1)]
     public string Nome { get; set; }
 
     [Required(ErrorMessage = "The field {0} is required")]
-    [StringLength(100, ErrorMessage = "The field {0} must be between {2} and {1} characters", MinimumLength = 1)]
     public string Marca { get; set; }
 
     [Required(ErrorMessage = "The field {0} is required")]
-    [StringLength(100, ErrorMessage = "The field {0} must be between {2} and {1} characters", MinimumLength = 1)]
     public string Modelo { get; set; }
 
     [Required(ErrorMessage = "The field {0} is required")]
-    [StringLength(100, ErrorMessage = "The field {0} must be between {2} and {1} characters", MinimumLength = 1)]
     public int Valor { get; set; }
 
     [Required(ErrorMessage = "The field {0} is required")]
-    [StringLength(100, ErrorMessage = "The field {0} must be between {2} and {1} characters", MinimumLength = 1)]
     public string Foto { get; set; }
   }
 }
