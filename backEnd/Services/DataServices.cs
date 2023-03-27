@@ -19,6 +19,13 @@ namespace backEnd.Services
       return await _repository.SearchVehicles();
     }
 
+    public async Task<List<Vehicle>> FilterVehicle(string filter)
+    {
+      var VehiclesFiltered = await _repository.FilterVehicle(filter);
+      if(VehiclesFiltered == null) throw new Exception("Not Found");
+      return VehiclesFiltered;
+    }
+
     public async Task<Vehicle> SearchVehicle(int id)
     {
       return await _repository.SearchVehicle(id);
