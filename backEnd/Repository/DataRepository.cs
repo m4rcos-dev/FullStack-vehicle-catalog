@@ -14,9 +14,9 @@ namespace backEnd.Repository
       _context = context;
     }
 
-    public async Task<List<Vehicle>> SearchVehicles()
+    public async Task<List<Vehicle>> SearchVehicles(int pn, int pq)
     {
-      return await _context.Vehicles.ToListAsync();
+      return await _context.Vehicles.Skip(pn * pq).Take(pq).ToListAsync();
     }
 
     public async Task<Vehicle> SearchVehicle(int id)
@@ -24,12 +24,12 @@ namespace backEnd.Repository
       return await _context.Vehicles.FirstOrDefaultAsync(x => x.Id == id);
     }
 
-    public async Task<List<Vehicle>> FilterVehicles(string filter)
+    public async Task<List<Vehicle>> FilterVehicles(string filter, int pn, int pq)
     {
       return await _context.Vehicles.Where(
         x => x.Nome.ToLower().Contains(filter)
         || x.Marca.ToLower().Contains(filter)
-        || x.Modelo.ToLower().Contains(filter)).ToListAsync();
+        || x.Modelo.ToLower().Contains(filter)).Skip(pn * pq).Take(pq).ToListAsync();
     }
 
     public async Task<Vehicle> CreateVehicle(Vehicle vehicle)
