@@ -17,7 +17,7 @@ function Footer() {
           <Box sx={{ dislplay: "flex", flexDirection: "column" }}>
             <Typography align='left' sx={{ mb: "1rem" }}>Comprar carro</Typography>
             <Typography align='left' sx={{ mb: "1rem" }}>Vender carro</Typography>
-            <Typography align='left' sx={{ mb: "1rem" }}>App Kavak</Typography>
+            <Typography align='left' sx={{ mb: "1rem" }}>App Karshop</Typography>
             <Typography align='left' sx={{ mb: "1rem" }}>Onde estamos</Typography>
           </Box>
           <Box sx={{ dislplay: "flex", flexDirection: "column" }}>
@@ -39,8 +39,8 @@ function Footer() {
         </Box>
         <hr style={{ margin: "3rem 0rem" }} />
         <Box sx={{ display: "flex", flexDirection: "column" }}>
-          <Typography variant='caption' align='left'>Copyright © 2022 KAVAK. Todos os direitos reservados. ·Política de Privacidade ·Termos e Condições ·Definições de cookies</Typography>
-          <Typography variant='caption' align='left'>KAVAK TECNOLOGIA E COMERCIO DE VEICULOS LTDA., inscrita no CNPJ sob o nº 36.740.390/0001-83, com sede na Estrada dos Alpes, nº 855, Galpão A, Módulo 1, Jardim Belval, Barueri/SP, CEP 06.423-080</Typography>
+          <Typography variant='caption' align='left'>Copyright © 2023 KARSHOP. Todos os direitos reservados. ·Política de Privacidade ·Termos e Condições ·Definições de cookies</Typography>
+          <Typography variant='caption' align='left'>KARSHOP TECNOLOGIA E COMERCIO DE VEICULOS LTDA., inscrita no CNPJ sob o nº 00.000.000/0000-00, com sede na Estrada dos XXXXX, nº 000, Galpão XXXX, Módulo 0, XXXXXXXX, Barueri/SP, CEP 00.000-000</Typography>
         </Box>
       </Container>
     </Box>
