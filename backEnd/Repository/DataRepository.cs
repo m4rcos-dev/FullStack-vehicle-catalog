@@ -24,6 +24,14 @@ namespace backEnd.Repository
       return await _context.Vehicles.FirstOrDefaultAsync(x => x.Id == id);
     }
 
+    public async Task<List<Vehicle>> FilterVehicles(string filter)
+    {
+      return await _context.Vehicles.Where(
+        x => x.Nome.ToLower().Contains(filter)
+        || x.Marca.ToLower().Contains(filter)
+        || x.Modelo.ToLower().Contains(filter)).ToListAsync();
+    }
+
     public async Task<Vehicle> CreateVehicle(Vehicle vehicle)
     {
       await _context.Vehicles.AddAsync(vehicle);
