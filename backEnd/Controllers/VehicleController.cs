@@ -18,14 +18,18 @@ namespace backEnd.Controllers
     }
 
     [HttpGet]
-    public async Task<IActionResult> Get([FromQuery] string q)
+    public async Task<IActionResult> Get(
+      [FromQuery] string q,
+      [FromQuery] int pn,
+      [FromQuery] int pq
+      )
     {
       if (q == null)
       {
-        var vehicles = await _services.SearchVehicles();
+        var vehicles = await _services.SearchVehicles(pn, pq);
         return Ok(vehicles);
       }
-      var FilterVehicles = await _services.FilterVehicles(q);
+      var FilterVehicles = await _services.FilterVehicles(q, pn, pq);
       return Ok(FilterVehicles);
     }
 
