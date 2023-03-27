@@ -7,8 +7,8 @@ services:
     tty: true # Mesmo que `docker run -t`
     stdin_open: true # Mesmo que `docker run -i`
     restart: always # Restarta a imagem caso algo a faça parar
-    volumes:
-      - ./backEnd/db:/var/lib/mysql
+    # volumes:
+      # - ./backEnd/db:/var/lib/mysql
     # Lista de portas mapeadas de dentro para fora do container
     # na notação porta_de_fora:porta_de_dentro
     ports:

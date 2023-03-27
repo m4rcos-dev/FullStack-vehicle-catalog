@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using backEnd.Model;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -39,6 +40,41 @@ namespace backEnd.Data
       new Vehicle(19, "500", "Fiat", "CABRIO", 70799, "https://images.kavak.services/images/209619/EXTERIOR-frontSidePilotNear-1668204832666.jpeg?d=540x310"),
       new Vehicle(20, "S60", "Volvo", "T4 FWD", 55699, "https://images.kavak.services/images/169847/EXTERIOR-frontSidePilotNear-1665780946432.jpeg?d=540x310"),
       });
+
+      var user = new IdentityUser
+      {
+        Id = "1",
+        UserName = "admin@admin.com",
+        NormalizedUserName = "ADMIN@ADMIN.COM",
+        Email = "admin@admin.com",
+        NormalizedEmail = "ADMIN@ADMIN.COM",
+        EmailConfirmed = true,
+        PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "@Admin123"),
+        SecurityStamp = string.Empty
+      };
+
+      builder.Entity<IdentityRole>().HasData(
+        new IdentityRole { Id = "1", Name = "Administrador", NormalizedName = "ADMINISTRADOR" });
+
+      var hasher = new PasswordHasher<IdentityUser>();
+      builder.Entity<IdentityUser>().HasData(user);
+
+      builder.Entity<IdentityUserRole<string>>().HasData(
+          new IdentityUserRole<string>
+          {
+            UserId = "1",
+            RoleId = "1"
+          });
+
+      var claim = new IdentityUserClaim<string>
+      {
+        Id = Guid.NewGuid().GetHashCode(),
+        UserId = user.Id,
+        ClaimType = "Vehicle",
+        ClaimValue = "Create,Update,Delete"
+      };
+
+      builder.Entity<IdentityUserClaim<string>>().HasData(claim);
     }
   }
 }

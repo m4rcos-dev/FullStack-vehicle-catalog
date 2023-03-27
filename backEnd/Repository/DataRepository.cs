@@ -1,5 +1,6 @@
 using backEnd.Data;
 using backEnd.Model;
+using backEnd.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace backEnd.Repository
@@ -13,34 +14,38 @@ namespace backEnd.Repository
       _context = context;
     }
 
-    public async Task<IEnumerable<Vehicle>> SearchVehicles()
+    public async Task<List<Vehicle>> SearchVehicles()
     {
       return await _context.Vehicles.ToListAsync();
     }
 
     public async Task<Vehicle> SearchVehicle(int id)
     {
-      return await _context.Vehicles.Where(x => x.Id == id).FirstOrDefaultAsync();
+      return await _context.Vehicles.FirstOrDefaultAsync(x => x.Id == id);
     }
 
-    public void CreateVehicle(Vehicle vehicle)
+    public async Task<Vehicle> CreateVehicle(Vehicle vehicle)
     {
-      _context.Add(vehicle);
+      await _context.Vehicles.AddAsync(vehicle);
+      await _context.SaveChangesAsync();
+
+      return vehicle;
     }
 
-    public void UpdateVehicle(Vehicle vehicle)
+    public async Task<Vehicle> UpdateVehicle(Vehicle vehicle)
     {
-      _context.Update(vehicle);
+      _context.Vehicles.Update(vehicle);
+      await _context.SaveChangesAsync();
+
+      return vehicle;
     }
 
-    public void DeleteVehicle(Vehicle vehicle)
+    public async Task<bool> DeleteVehicle(Vehicle vehicle)
     {
-      _context.Remove(vehicle);
-    }
+      _context.Vehicles.Remove(vehicle);
+      await _context.SaveChangesAsync();
 
-    public async Task<bool> SaveChangeAsync()
-    {
-      return await _context.SaveChangesAsync() > 0;
+      return true;
     }
   }
 }

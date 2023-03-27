@@ -1,7 +1,10 @@
 using System.Text;
 using backEnd;
 using backEnd.Data;
+using backEnd.Interfaces;
 using backEnd.Repository;
+using backEnd.Repository.Interfaces;
+using backEnd.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -51,6 +54,7 @@ builder.Services.AddAuthentication(x =>
 });
 
 builder.Services.AddScoped<IDataRepository, DataRepository>();
+builder.Services.AddScoped<IDataServices, DataServices>();
 
 builder.Services.AddCors();
 
@@ -59,8 +63,13 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+  app.UseExceptionHandler("/error-development");
   app.UseSwagger();
   app.UseSwaggerUI();
+}
+else
+{
+  app.UseExceptionHandler("/error");
 }
 
 app.UseHttpsRedirection();
