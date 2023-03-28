@@ -10,6 +10,9 @@ import AddIcon from '@mui/icons-material/Add';
 
 function Vehicles() {
   const [allVehicles, setAllVehicles] = useState([]);
+  const [query, setQuery] = useState("");
+  const [pageNumber, setPageNumber] = useState(0);
+  const [pageQuantity, setPageQuantity] = useState(16);
   const { value } = useContext(MyContext);
   const [open, setOpen] = useState(false);
   const [open2, setOpen2] = useState(false);
@@ -44,11 +47,14 @@ function Vehicles() {
   });
 
   const fetchAllVehicle = async () => {
-    const vheicles = await VehiclesServices.fetchAllVehicles();
+    const vheicles = await VehiclesServices.fetchAllVehicles(query, pageNumber, pageQuantity);
     setAllVehicles(vheicles);
   };
 
-  useEffect(() => { fetchAllVehicle() }, []);
+  useEffect(() => {
+    fetchAllVehicle()
+  }, []);
+
 
   const runEditVehicle = async (currentVheicle) => {
     const resultVehicle = await VehiclesServices.fetchAllOneVehicle(currentVheicle);
@@ -178,7 +184,7 @@ function Vehicles() {
   useEffect(() => { validTokenLocal() }, [])
 
   const handleClickAlert = (type, message, isOpen) => {
-    setOpenAlert({type: type, message: message, isOpen: isOpen});
+    setOpenAlert({ type: type, message: message, isOpen: isOpen });
   };
 
   const handleCloseAlert = (event, reason) => {
