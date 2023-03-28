@@ -10,10 +10,9 @@ import AddIcon from '@mui/icons-material/Add';
 
 function Vehicles() {
   const [allVehicles, setAllVehicles] = useState([]);
-  const [query, setQuery] = useState("");
   const [pageNumber, setPageNumber] = useState(0);
   const [pageQuantity, setPageQuantity] = useState(16);
-  const { value } = useContext(MyContext);
+  const { valueContext } = useContext(MyContext);
   const [open, setOpen] = useState(false);
   const [open2, setOpen2] = useState(false);
   const [open3, setOpen3] = useState(false);
@@ -47,13 +46,13 @@ function Vehicles() {
   });
 
   const fetchAllVehicle = async () => {
-    const vheicles = await VehiclesServices.fetchAllVehicles(query, pageNumber, pageQuantity);
+    const vheicles = await VehiclesServices.fetchAllVehicles(valueContext.currentFilter, pageNumber, pageQuantity);
     setAllVehicles(vheicles);
   };
 
   useEffect(() => {
     fetchAllVehicle()
-  }, [query, pageNumber, pageQuantity]);
+  }, [valueContext.currentFilter, pageNumber, pageQuantity]);
 
 
   const runEditVehicle = async (currentVheicle) => {
@@ -240,7 +239,7 @@ function Vehicles() {
   return (
     <Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
       <Box sx={{ width: "100%", display: "flex", justifyContent: "center", flexDirection: "column", alignItems: "center" }}>
-        {value.validIconCreate && <BoxCustom
+        {valueContext.validIconCreate && <BoxCustom
           onClick={runCreateVehicle}
           sx={{
             position: "fixed",
@@ -279,8 +278,8 @@ function Vehicles() {
                 <Typography sx={{ fontWeight: "bold" }}>{`${vehicle.marca} ${vehicle.nome} ${vehicle.modelo}`}</Typography>
                 <Typography variant='h6' color="primary">{vehicle.valor.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</Typography>
                 <Box sx={{ width: "100%", textAlign: "right" }}>
-                  {value.validIconsEdit && <EditIconCustom onClick={() => runEditVehicle(vehicle.id)} color="primary" fontSize='medium' sx={{ m: "0rem 0rem 0.5rem 0rem", }} />}
-                  {value.validIconsDelete && <DeleteIconCustom onClick={() => runDeleteVehicle(vehicle.id)} color="error" fontSize='medium' sx={{ m: "0rem 0.3rem 0.5rem 0.3rem" }} />}
+                  {valueContext.validIconsEdit && <EditIconCustom onClick={() => runEditVehicle(vehicle.id)} color="primary" fontSize='medium' sx={{ m: "0rem 0rem 0.5rem 0rem", }} />}
+                  {valueContext.validIconsDelete && <DeleteIconCustom onClick={() => runDeleteVehicle(vehicle.id)} color="error" fontSize='medium' sx={{ m: "0rem 0.3rem 0.5rem 0.3rem" }} />}
                 </Box>
               </Box>
             </Box>

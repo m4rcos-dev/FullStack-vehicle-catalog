@@ -30,7 +30,7 @@ function Header() {
   const [passwordIsValid, setPasswordIsvalid] = useState();
   const [openAlert, setOpenAlert] = useState(false);
   const [openAlertError, setOpenAlertError] = useState(false)
-  const { releaseIcons } = useContext(MyContext);
+  const { releaseIcons, handleCurrentFilter, valueContext } = useContext(MyContext);
   const [titleLogin, setTitleLogin] = useState(true);
   const [loginResultError, setLoginResultError] = useState("Usuário ou senha inválidos");
 
@@ -43,6 +43,10 @@ function Header() {
     const validPassword = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[0-9])(?=.{8,})/;
     const isValidP = validPassword.test(value.password);
     setPasswordIsvalid(!isValidP);
+  }
+
+  const handleFilter = ({ target }) => {
+    handleCurrentFilter(target.textContent);
   }
 
   const login = async (e) => {
@@ -157,13 +161,15 @@ function Header() {
 
       </HideOnScroll>
       <Toolbar />
-      <AppBar sx={{ height: '65px', zIndex: "0", display: 'flex', alignItems: 'center' }}>
+      <AppBar
+      sx={{ height: '65px', zIndex: "0", display: 'flex', alignItems: 'center' }}>
         <Stack spacing={2} sx={{ width: "66%", backgroundColor: "common.white", borderRadius: 2, marginTop: 0.5 }}>
           <Autocomplete
             freeSolo
             id="free-solo-2-demo"
             disableClearable
             options={allVehicles.map((option) => option.nome)}
+            onChange={e => handleFilter(e)}
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -172,6 +178,8 @@ function Header() {
                   ...params.InputProps,
                   type: 'search',
                 }}
+                value={valueContext.currentFilter}
+                onChange={e => handleFilter(e)}
               />
             )}
           />
@@ -184,6 +192,7 @@ function Header() {
             id="free-solo-2-demo"
             disableClearable
             options={allVehicles.map((option) => option.nome)}
+            onChange={e => handleFilter(e)}
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -192,6 +201,8 @@ function Header() {
                   ...params.InputProps,
                   type: 'search',
                 }}
+                value={valueContext.currentFilter}
+                onChange={e => handleFilter(e)}
               />
             )}
           />
