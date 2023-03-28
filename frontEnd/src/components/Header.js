@@ -36,7 +36,7 @@ function Header() {
 
   const handleValue = ({ target }) => {
     setvalue({ ...value, [target.name]: target.value })
-    const validEmail = /^[a-zA-Z]+@[a-zA-Z]+$/;
+    const validEmail = /^[a-zA-Z]{2,}@[a-zA-Z]{2,}\.[a-zA-Z]{2,}$/;
     const isValid = validEmail.test(value.email);
     setEmailIsValid(!isValid)
 
