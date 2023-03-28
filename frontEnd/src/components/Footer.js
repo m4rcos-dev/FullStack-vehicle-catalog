@@ -8,7 +8,7 @@ import KarShopWhiteLogo from '../assets/KarShopWhiteLogo';
 
 function Footer() {
   return (
-    <Box sx={{ height: 476, backgroundColor: "common.black", p: "1rem" }}>
+    <Box sx={{ height: 419, backgroundColor: "common.black", p: "1rem" }}>
       <Container sx={{ color: "common.white", }}>
         <Box sx={{ display: "flex", justifyContent: "space-between", mt: "1rem" }}>
           <Box sx={{ height: 184, width: 220, textAlign: "left", mt: "1rem" }}>
@@ -37,7 +37,7 @@ function Footer() {
           <InstagramIcon fontSize='large' sx={{ mr: "0.5rem" }} />
           <LinkedInIcon fontSize='large' sx={{ mr: "0.5rem" }} />
         </Box>
-        <hr style={{ margin: "3rem 0rem" }} />
+        <hr style={{ margin: "2rem 0rem" }} />
         <Box sx={{ display: "flex", flexDirection: "column" }}>
           <Typography variant='caption' align='left'>Copyright © 2023 KARSHOP. Todos os direitos reservados. ·Política de Privacidade ·Termos e Condições ·Definições de cookies</Typography>
           <Typography variant='caption' align='left'>KARSHOP TECNOLOGIA E COMERCIO DE VEICULOS LTDA., inscrita no CNPJ sob o nº 00.000.000/0000-00, com sede na Estrada dos XXXXX, nº 000, Galpão XXXX, Módulo 0, XXXXXXXX, Barueri/SP, CEP 00.000-000</Typography>
