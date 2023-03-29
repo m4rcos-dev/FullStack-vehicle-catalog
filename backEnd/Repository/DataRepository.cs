@@ -33,12 +33,19 @@ namespace backEnd.Repository
       return await _context.Vehicles.FirstOrDefaultAsync(x => x.Id == id);
     }
 
-    public async Task<List<Vehicle>> FilterVehicles(string filter, int pn, int pq)
+    public async Task<IVehiclesList> FilterVehicles(string filter, int pn, int pq)
     {
-      return await _context.Vehicles.Where(
-        x => x.Nome.ToLower().Contains(filter)
-        || x.Marca.ToLower().Contains(filter)
-        || x.Modelo.ToLower().Contains(filter)).Skip(pn * pq).Take(pq).ToListAsync();
+      var resultFilter = await _context.Vehicles.Where(
+          x => x.Nome.ToLower().Contains(filter)
+          || x.Marca.ToLower().Contains(filter)
+          || x.Modelo.ToLower().Contains(filter)).ToListAsync();
+
+      var resultFilterPagination = await _context.Vehicles.Where(
+          x => x.Nome.ToLower().Contains(filter)
+          || x.Marca.ToLower().Contains(filter)
+          || x.Modelo.ToLower().Contains(filter)).Skip(pn * pq).Take(pq).ToListAsync();
+          
+      return new VehiclesList { Length = resultFilter.Count, Vehicles = resultFilterPagination };
     }
 
     public async Task<Vehicle> CreateVehicle(Vehicle vehicle)
