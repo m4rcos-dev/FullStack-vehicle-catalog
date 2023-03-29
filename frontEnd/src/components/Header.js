@@ -103,8 +103,8 @@ function Header() {
   };
 
   const fetchAllVehicle = async () => {
-    const vheicles = await VehiclesServices.fetchAllVehicles();
-    setAllVehicles(vheicles);
+    const vheicles = await VehiclesServices.fetchAllVehicles("", 0, 0);
+    setAllVehicles(vheicles.vehicles);
   }
 
   const validTokenLocal = () => {

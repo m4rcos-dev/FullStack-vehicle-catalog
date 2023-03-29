@@ -10,6 +10,7 @@ import AddIcon from '@mui/icons-material/Add';
 
 function Vehicles() {
   const [allVehicles, setAllVehicles] = useState([]);
+  const [allPages, setAllPages ] = useState(25)
   const [pageNumber, setPageNumber] = useState(0);
   const [pageQuantity, setPageQuantity] = useState(16);
   const { valueContext } = useContext(MyContext);
@@ -47,7 +48,8 @@ function Vehicles() {
 
   const fetchAllVehicle = async () => {
     const vheicles = await VehiclesServices.fetchAllVehicles(valueContext.currentFilter, pageNumber, pageQuantity);
-    setAllVehicles(vheicles);
+    setAllVehicles(vheicles.vehicles);
+    setAllPages(vheicles.length)
   };
 
   useEffect(() => {
@@ -287,7 +289,7 @@ function Vehicles() {
         </Box>
         <TablePagination
           component="div"
-          count={25}
+          count={allPages}
           page={pageNumber}
           onPageChange={handleChangePage}
           rowsPerPage={pageQuantity}
