@@ -4,7 +4,7 @@ namespace backEnd.Interfaces
 {
   public interface IDataServices
   {
-    Task<List<Vehicle>> SearchVehicles(int pn, int pq);
+    Task<IVehiclesList> SearchVehicles(int pn, int pq);
     Task<Vehicle> SearchVehicle(int id);
     Task<List<Vehicle>> FilterVehicles(string filter, int pn, int pq);
     Task<Vehicle> CreateVehicle(Vehicle vehicle);

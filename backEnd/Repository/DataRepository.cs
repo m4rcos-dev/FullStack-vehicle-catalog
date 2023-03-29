@@ -1,4 +1,5 @@
 using backEnd.Data;
+using backEnd.Interfaces;
 using backEnd.Model;
 using backEnd.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -14,9 +15,17 @@ namespace backEnd.Repository
       _context = context;
     }
 
-    public async Task<List<Vehicle>> SearchVehicles(int pn, int pq)
+    public async Task<IVehiclesList> SearchVehicles(int pn, int pq)
     {
-      return await _context.Vehicles.Skip(pn * pq).Take(pq).ToListAsync();
+      if (pn == 0 && pq == 0)
+      {
+        var allVehicles = await _context.Vehicles.ToListAsync();
+        return new VehiclesList { Length = allVehicles.Count, Vehicles = allVehicles };
+      }
+
+      var result = await _context.Vehicles.ToListAsync();
+      var resultPagination = await _context.Vehicles.Skip(pn * pq).Take(pq).ToListAsync();
+      return new VehiclesList { Length = result.Count, Vehicles = resultPagination };
     }
 
     public async Task<Vehicle> SearchVehicle(int id)
