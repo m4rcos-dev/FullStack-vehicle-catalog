@@ -118,6 +118,13 @@ function Header() {
     setTitleLogin(false);
   }
 
+  const arrayFilter = () => {
+    const filterName = allVehicles.map((filter) => filter.nome);
+    const filterBrand = allVehicles.map((filter) => filter.marca);
+    const filterModel = allVehicles.map((filter) => filter.modelo);
+    return [...filterName, ...filterBrand, ...filterModel]
+  };
+
   useEffect(() => { fetchAllVehicle() }, [])
   useEffect(() => { validTokenLocal() }, [])
 
@@ -168,7 +175,7 @@ function Header() {
             freeSolo
             id="free-solo-2-demo"
             disableClearable
-            options={allVehicles.map((option) => option.nome)}
+            options={arrayFilter().map((option) => option)}
             onChange={e => handleFilter(e)}
             renderInput={(params) => (
               <TextField
@@ -191,7 +198,7 @@ function Header() {
             freeSolo
             id="free-solo-2-demo"
             disableClearable
-            options={allVehicles.map((option) => option.nome)}
+            options={arrayFilter().map((option) => option)}
             onChange={e => handleFilter(e)}
             renderInput={(params) => (
               <TextField
