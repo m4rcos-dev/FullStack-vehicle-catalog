@@ -18,10 +18,19 @@ namespace backEnd.Controllers
     }
 
     [HttpGet]
-    public async Task<IActionResult> Get()
+    public async Task<IActionResult> Get(
+      [FromQuery] string q,
+      [FromQuery] int pn,
+      [FromQuery] int pq
+      )
     {
-      var vehicles = await _services.SearchVehicles();
-      return Ok(vehicles);
+      if (q == null)
+      {
+        var vehicles = await _services.SearchVehicles(pn, pq);
+        return Ok(vehicles);
+      }
+      var FilterVehicles = await _services.FilterVehicles(q, pn, pq);
+      return Ok(FilterVehicles);
     }
 
     [HttpGet("{id}")]
@@ -30,7 +39,6 @@ namespace backEnd.Controllers
       var vehicle = await _services.SearchVehicle(id);
       return Ok(vehicle);
     }
-
 
     [ClaimsAuthorize("Vehicle", "Create")]
     [HttpPost]

@@ -9,6 +9,7 @@ import { common } from '@mui/material/colors';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import VehiclesServices from '../services/VehiclesServices';
 import { MyContext } from '../context/MyContext';
+import KarShopBlackLogo from '../assets/KarShopBlackLogo';
 
 function HideOnScroll(props) {
   const { children } = props;
@@ -29,19 +30,23 @@ function Header() {
   const [passwordIsValid, setPasswordIsvalid] = useState();
   const [openAlert, setOpenAlert] = useState(false);
   const [openAlertError, setOpenAlertError] = useState(false)
-  const { releaseIcons } = useContext(MyContext);
+  const { releaseIcons, handleCurrentFilter, valueContext } = useContext(MyContext);
   const [titleLogin, setTitleLogin] = useState(true);
   const [loginResultError, setLoginResultError] = useState("Usuário ou senha inválidos");
 
   const handleValue = ({ target }) => {
     setvalue({ ...value, [target.name]: target.value })
-    const validEmail = /^[a-zA-Z]+@[a-zA-Z]+$/;
+    const validEmail = /^[a-zA-Z]{2,}@[a-zA-Z]{2,}\.[a-zA-Z]{2,}$/;
     const isValid = validEmail.test(value.email);
     setEmailIsValid(!isValid)
 
     const validPassword = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[0-9])(?=.{8,})/;
     const isValidP = validPassword.test(value.password);
     setPasswordIsvalid(!isValidP);
+  }
+
+  const handleFilter = ({ target }) => {
+    handleCurrentFilter(target.textContent);
   }
 
   const login = async (e) => {
@@ -98,8 +103,8 @@ function Header() {
   };
 
   const fetchAllVehicle = async () => {
-    const vheicles = await VehiclesServices.fetchAllVehicles();
-    setAllVehicles(vheicles);
+    const vheicles = await VehiclesServices.fetchAllVehicles("", 0, 0);
+    setAllVehicles(vheicles.vehicles);
   }
 
   const validTokenLocal = () => {
@@ -112,6 +117,13 @@ function Header() {
     releaseIcons(true);
     setTitleLogin(false);
   }
+
+  const arrayFilter = () => {
+    const filterName = allVehicles.map((filter) => filter.nome);
+    const filterBrand = allVehicles.map((filter) => filter.marca);
+    const filterModel = allVehicles.map((filter) => filter.modelo);
+    return [...filterName, ...filterBrand, ...filterModel]
+  };
 
   useEffect(() => { fetchAllVehicle() }, [])
   useEffect(() => { validTokenLocal() }, [])
@@ -134,11 +146,11 @@ function Header() {
             justifyContent: 'space-between',
           }}>
             <Box sx={{
-              width: '112px',
-              height: '84px',
+              width: '200px',
+              height: '0px',
               display: 'flex',
             }}>
-              <svg viewBox="0 0 7774 2048"><path d="M7296.82.052L6752.798 1024l544.022 1023.948h477.424L7239.034 1024 7774.244.052zm-1130.746 0v1705.534L5275.298.052 4205.476 2047.954h470.514l599.916-1147.71 254.406 487.47h-254.406l-178.412 341.108h611.236l166.464 319.132h726.816V.052h-435.96zm-1767.734 0l-599.916 1147.71L3199.138.052h-470.514l1069.822 2047.902L4868.268.052H4398.39zm-2076.172 0l-892.04 1707.424L1072.7 1024 1607.91.052h-477.424L586.464 1024l544.022 1023.948h593.006l166.464-319.132h611.236l-178.412-341.108h-254.406l254.406-487.47 598.678 1147.71h470.514L2322.15.046zM-.244 2047.952h435.33V.05H-.244z"></path></svg>
+              <KarShopBlackLogo />
             </Box>
             {titleLogin && <Link href="#" underline="none" onClick={handleToggle}
               sx={{ display: 'flex', alignItems: 'center', color: common.black }}>
@@ -156,13 +168,15 @@ function Header() {
 
       </HideOnScroll>
       <Toolbar />
-      <AppBar sx={{ height: '65px', zIndex: "0", display: 'flex', alignItems: 'center' }}>
+      <AppBar
+      sx={{ height: '65px', zIndex: "0", display: 'flex', alignItems: 'center' }}>
         <Stack spacing={2} sx={{ width: "66%", backgroundColor: "common.white", borderRadius: 2, marginTop: 0.5 }}>
           <Autocomplete
             freeSolo
             id="free-solo-2-demo"
             disableClearable
-            options={allVehicles.map((option) => option.nome)}
+            options={arrayFilter().map((option) => option)}
+            onChange={e => handleFilter(e)}
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -171,6 +185,8 @@ function Header() {
                   ...params.InputProps,
                   type: 'search',
                 }}
+                value={valueContext.currentFilter}
+                onChange={e => handleFilter(e)}
               />
             )}
           />
@@ -182,7 +198,8 @@ function Header() {
             freeSolo
             id="free-solo-2-demo"
             disableClearable
-            options={allVehicles.map((option) => option.nome)}
+            options={arrayFilter().map((option) => option)}
+            onChange={e => handleFilter(e)}
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -191,6 +208,8 @@ function Header() {
                   ...params.InputProps,
                   type: 'search',
                 }}
+                value={valueContext.currentFilter}
+                onChange={e => handleFilter(e)}
               />
             )}
           />

@@ -14,14 +14,19 @@ namespace backEnd.Services
       _repository = repository;
     }
 
-    public async Task<List<Vehicle>> SearchVehicles()
+    public async Task<IVehiclesList> SearchVehicles(int pn, int pq)
     {
-      return await _repository.SearchVehicles();
+      return await _repository.SearchVehicles(pn, pq);
     }
 
     public async Task<Vehicle> SearchVehicle(int id)
     {
       return await _repository.SearchVehicle(id);
+    }
+
+    public async Task<IVehiclesList> FilterVehicles(string filter, int pn, int pq)
+    {
+      return await _repository.FilterVehicles(filter, pn, pq);
     }
 
     public async Task<Vehicle> CreateVehicle(Vehicle vehicle)

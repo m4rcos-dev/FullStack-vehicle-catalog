@@ -3,9 +3,15 @@ import axios from "axios";
 const url = 'https://localhost:7267'
 
 const VehiclesServices = {
-  fetchAllVehicles: async () => {
+  fetchAllVehicles: async (q, pn, pq) => {
+    if(q === undefined || pn === undefined || pq === undefined)
+    {
+    q = "";
+    pn = 0;
+    pq = 25;
+    }
     try {
-      const vehicles = await axios.get(`${url}/Vehicle`);
+      const vehicles = await axios.get(`${url}/Vehicle?q=${q}&pn=${pn}&pq=${pq}`);
       return vehicles.data;
     } catch (error) {
       console.log(error);

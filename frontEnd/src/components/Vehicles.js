@@ -1,4 +1,4 @@
-import { Alert, Backdrop, Box, Button, InputAdornment, Snackbar, styled, TextField, Typography } from '@mui/material';
+import { Alert, Backdrop, Box, Button, InputAdornment, Snackbar, styled, TablePagination, TextField, Typography } from '@mui/material';
 import React, { useContext, useEffect, useState } from 'react'
 import VehiclesServices from '../services/VehiclesServices';
 import EditIcon from '@mui/icons-material/Edit';
@@ -7,13 +7,19 @@ import { MyContext } from '../context/MyContext';
 import { common } from '@mui/material/colors';
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 import AddIcon from '@mui/icons-material/Add';
+import Loading from './Loading';
 
 function Vehicles() {
   const [allVehicles, setAllVehicles] = useState([]);
-  const { value } = useContext(MyContext);
+  const [query, setQuery] = useState("");
+  const [allPages, setAllPages] = useState(25)
+  const [pageNumber, setPageNumber] = useState(0);
+  const [pageQuantity, setPageQuantity] = useState(25);
+  const { valueContext, handleCurrentFilter } = useContext(MyContext);
   const [open, setOpen] = useState(false);
   const [open2, setOpen2] = useState(false);
   const [open3, setOpen3] = useState(false);
+  const [load, setLoad] = useState(true);
   const [resutlVehicle, setResultVehicle] = useState({
     nome: "",
     marca: "",
@@ -43,12 +49,25 @@ function Vehicles() {
     foto: true,
   });
 
-  const fetchAllVehicle = async () => {
-    const vheicles = await VehiclesServices.fetchAllVehicles();
-    setAllVehicles(vheicles);
-  };
+  useEffect(() => {
+    const fetchAllVehicle = async () => {
+      setLoad(true);
+      const vheicles = await VehiclesServices.fetchAllVehicles(valueContext.currentFilter, pageNumber, pageQuantity);
+      setAllVehicles(vheicles.vehicles);
+      setAllPages(vheicles.length)
+      setLoad(false);
+    };
+    fetchAllVehicle();
+  }, [valueContext.currentFilter, pageNumber, pageQuantity]);
 
-  useEffect(() => { fetchAllVehicle() }, []);
+  useEffect(() => {
+    const handleQuery = () => {
+      handleCurrentFilter("")
+      setQuery("start")
+    }
+    handleQuery()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [query === ""])
 
   const runEditVehicle = async (currentVheicle) => {
     const resultVehicle = await VehiclesServices.fetchAllOneVehicle(currentVheicle);
@@ -178,7 +197,7 @@ function Vehicles() {
   useEffect(() => { validTokenLocal() }, [])
 
   const handleClickAlert = (type, message, isOpen) => {
-    setOpenAlert({type: type, message: message, isOpen: isOpen});
+    setOpenAlert({ type: type, message: message, isOpen: isOpen });
   };
 
   const handleCloseAlert = (event, reason) => {
@@ -222,52 +241,73 @@ function Vehicles() {
     }
   }))
 
+  const handleChangePage = (event, newPage) => {
+    setPageNumber(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setPageQuantity(parseInt(event.target.value, 10));
+    setPageNumber(0);
+  };
+
   return (
     <Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
-      {value.validIconCreate && <BoxCustom
-        onClick={runCreateVehicle}
-        sx={{
-          width: 305,
-          height: 287, p: "0 8 0 8",
-          boxShadow: 8, m: "0.4rem", mt: '1.3rem',
-          borderRadius: "0.375rem",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center"
-        }}>
-        <AddIcon sx={{ color: "text.secondary", width: '30%', height: '100vh' }} />
-      </BoxCustom>}
-      <Box sx={{ width: "67%", display: "flex", flexWrap: "wrap", justifyContent: "center", mt: '1rem' }}>
-        {sortByValor().map((vehicle) => (
-          <Box key={`${vehicle.id}${vehicle.nome}`} sx={{
+      {load ? <Loading /> : (<Box sx={{ width: "100%", display: "flex", justifyContent: "center", flexDirection: "column", alignItems: "center" }}>
+        {valueContext.validIconCreate && <BoxCustom
+          onClick={runCreateVehicle}
+          sx={{
+            position: "fixed",
+            left: 0, top: 150,
             width: 305,
             height: 287, p: "0 8 0 8",
-            boxShadow: 8, m: "0.4rem",
+            boxShadow: 8, m: "0.4rem", mt: '1.3rem',
             borderRadius: "0.375rem",
             display: "flex",
-            flexDirection: "column",
-            alignItems: "flex-start"
+            alignItems: "center",
+            justifyContent: "center"
           }}>
-            <img src={vehicle.foto} alt={vehicle.nome} style={{ width: "305px", height: "175.078px" }} />
-            <Box sx={{
-              width: "90%",
-              height: "100vh",
+          <AddIcon sx={{ color: "text.secondary", width: '30%', height: '100vh' }} />
+        </BoxCustom>}
+        <Box sx={{ width: "67%", display: "flex", flexWrap: "wrap", justifyContent: "center", mt: '1rem' }}>
+          {sortByValor().map((vehicle) => (
+            <Box key={`${vehicle.id}${vehicle.nome}`} sx={{
+              width: 305,
+              height: 287, p: "0 8 0 8",
+              boxShadow: 8, m: "0.4rem",
+              borderRadius: "0.375rem",
               display: "flex",
               flexDirection: "column",
-              justifyContent: "space-around",
-              alignItems: "flex-start",
-              m: "1rem"
+              alignItems: "flex-start"
             }}>
-              <Typography sx={{ fontWeight: "bold" }}>{`${vehicle.marca} ${vehicle.nome} ${vehicle.modelo}`}</Typography>
-              <Typography variant='h6' color="primary">{vehicle.valor.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</Typography>
-              <Box sx={{ width: "100%", textAlign: "right" }}>
-                {value.validIconsEdit && <EditIconCustom onClick={() => runEditVehicle(vehicle.id)} color="primary" fontSize='medium' sx={{ m: "0rem 0rem 0.5rem 0rem", }} />}
-                {value.validIconsDelete && <DeleteIconCustom onClick={() => runDeleteVehicle(vehicle.id)} color="error" fontSize='medium' sx={{ m: "0rem 0.3rem 0.5rem 0.3rem" }} />}
+              <img src={vehicle.foto} alt={vehicle.nome} style={{ width: "305px", height: "175.078px" }} />
+              <Box sx={{
+                width: "90%",
+                height: "100vh",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-around",
+                alignItems: "flex-start",
+                m: "1rem"
+              }}>
+                <Typography sx={{ fontWeight: "bold" }}>{`${vehicle.marca} ${vehicle.nome} ${vehicle.modelo}`}</Typography>
+                <Typography variant='h6' color="primary">{vehicle.valor.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</Typography>
+                <Box sx={{ width: "100%", textAlign: "right" }}>
+                  {valueContext.validIconsEdit && <EditIconCustom onClick={() => runEditVehicle(vehicle.id)} color="primary" fontSize='medium' sx={{ m: "0rem 0rem 0.5rem 0rem", }} />}
+                  {valueContext.validIconsDelete && <DeleteIconCustom onClick={() => runDeleteVehicle(vehicle.id)} color="error" fontSize='medium' sx={{ m: "0rem 0.3rem 0.5rem 0.3rem" }} />}
+                </Box>
               </Box>
             </Box>
-          </Box>
-        ))}
-      </Box>
+          ))}
+        </Box>
+        <TablePagination
+          component="div"
+          count={allPages}
+          page={pageNumber}
+          onPageChange={handleChangePage}
+          rowsPerPage={pageQuantity}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </Box>)}
       <Backdrop
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 0 }}
         open={open}
