@@ -7,6 +7,7 @@ import { MyContext } from '../context/MyContext';
 import { common } from '@mui/material/colors';
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 import AddIcon from '@mui/icons-material/Add';
+import Loading from './Loading';
 
 function Vehicles() {
   const [allVehicles, setAllVehicles] = useState([]);
@@ -18,6 +19,7 @@ function Vehicles() {
   const [open, setOpen] = useState(false);
   const [open2, setOpen2] = useState(false);
   const [open3, setOpen3] = useState(false);
+  const [load, setLoad] = useState(false);
   const [resutlVehicle, setResultVehicle] = useState({
     nome: "",
     marca: "",
@@ -49,9 +51,11 @@ function Vehicles() {
 
   useEffect(() => {
     const fetchAllVehicle = async () => {
+      setLoad(true);
       const vheicles = await VehiclesServices.fetchAllVehicles(valueContext.currentFilter, pageNumber, pageQuantity);
       setAllVehicles(vheicles.vehicles);
       setAllPages(vheicles.length)
+      setLoad(false);
     };
     fetchAllVehicle();
   }, [valueContext.currentFilter, pageNumber, pageQuantity]);
@@ -62,7 +66,7 @@ function Vehicles() {
       setQuery("start")
     }
     handleQuery()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query === ""])
 
   const runEditVehicle = async (currentVheicle) => {
@@ -248,7 +252,7 @@ function Vehicles() {
 
   return (
     <Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
-      <Box sx={{ width: "100%", display: "flex", justifyContent: "center", flexDirection: "column", alignItems: "center" }}>
+      {load ? <Loading /> : (<Box sx={{ width: "100%", display: "flex", justifyContent: "center", flexDirection: "column", alignItems: "center" }}>
         {valueContext.validIconCreate && <BoxCustom
           onClick={runCreateVehicle}
           sx={{
@@ -303,7 +307,7 @@ function Vehicles() {
           rowsPerPage={pageQuantity}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
-      </Box>
+      </Box>)}
       <Backdrop
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 0 }}
         open={open}
