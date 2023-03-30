@@ -10,10 +10,11 @@ import AddIcon from '@mui/icons-material/Add';
 
 function Vehicles() {
   const [allVehicles, setAllVehicles] = useState([]);
-  const [allPages, setAllPages ] = useState(25)
+  const [query, setQuery] = useState("");
+  const [allPages, setAllPages] = useState(25)
   const [pageNumber, setPageNumber] = useState(0);
   const [pageQuantity, setPageQuantity] = useState(16);
-  const { valueContext } = useContext(MyContext);
+  const { valueContext, handleCurrentFilter } = useContext(MyContext);
   const [open, setOpen] = useState(false);
   const [open2, setOpen2] = useState(false);
   const [open3, setOpen3] = useState(false);
@@ -46,16 +47,23 @@ function Vehicles() {
     foto: true,
   });
 
-  const fetchAllVehicle = async () => {
-    const vheicles = await VehiclesServices.fetchAllVehicles(valueContext.currentFilter, pageNumber, pageQuantity);
-    setAllVehicles(vheicles.vehicles);
-    setAllPages(vheicles.length)
-  };
-
   useEffect(() => {
-    fetchAllVehicle()
+    const fetchAllVehicle = async () => {
+      const vheicles = await VehiclesServices.fetchAllVehicles(valueContext.currentFilter, pageNumber, pageQuantity);
+      setAllVehicles(vheicles.vehicles);
+      setAllPages(vheicles.length)
+    };
+    fetchAllVehicle();
   }, [valueContext.currentFilter, pageNumber, pageQuantity]);
 
+  useEffect(() => {
+    const handleQuery = () => {
+      handleCurrentFilter("")
+      setQuery("start")
+    }
+    handleQuery()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [query === ""])
 
   const runEditVehicle = async (currentVheicle) => {
     const resultVehicle = await VehiclesServices.fetchAllOneVehicle(currentVheicle);
