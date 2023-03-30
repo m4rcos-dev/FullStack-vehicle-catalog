@@ -19,7 +19,7 @@ function Vehicles() {
   const [open, setOpen] = useState(false);
   const [open2, setOpen2] = useState(false);
   const [open3, setOpen3] = useState(false);
-  const [load, setLoad] = useState(false);
+  const [load, setLoad] = useState(true);
   const [resutlVehicle, setResultVehicle] = useState({
     nome: "",
     marca: "",
