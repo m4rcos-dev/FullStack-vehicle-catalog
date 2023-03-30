@@ -8,11 +8,10 @@ const VehiclesServices = {
     {
     q = "";
     pn = 0;
-    pq = 16;
+    pq = 25;
     }
     try {
       const vehicles = await axios.get(`${url}/Vehicle?q=${q}&pn=${pn}&pq=${pq}`);
-      console.log(vehicles);
       return vehicles.data;
     } catch (error) {
       console.log(error);

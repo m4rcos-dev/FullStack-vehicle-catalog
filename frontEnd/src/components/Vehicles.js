@@ -14,7 +14,7 @@ function Vehicles() {
   const [query, setQuery] = useState("");
   const [allPages, setAllPages] = useState(25)
   const [pageNumber, setPageNumber] = useState(0);
-  const [pageQuantity, setPageQuantity] = useState(16);
+  const [pageQuantity, setPageQuantity] = useState(25);
   const { valueContext, handleCurrentFilter } = useContext(MyContext);
   const [open, setOpen] = useState(false);
   const [open2, setOpen2] = useState(false);
