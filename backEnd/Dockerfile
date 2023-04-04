@@ -12,9 +12,8 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["backEnd.csproj", "."]
 RUN dotnet restore "backEnd.csproj"
-WORKDIR /
 RUN dotnet dev-certs https --trust
-COPY .aspnet/https/aspnetapp.pfx /https/
+COPY /.aspnet/https/aspnetapp.pfx /https/
 ENV ASPNETCORE_Kestrel__Certificates__Default__Password="your_password"
 ENV ASPNETCORE_Kestrel__Certificates__Default__Path="/https/aspnetapp.pfx"
 WORKDIR /src
