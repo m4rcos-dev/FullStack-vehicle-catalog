@@ -12,8 +12,20 @@ using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+string server = Environment.GetEnvironmentVariable("MYSQL_HOST") ?? "localhost";
+string portDbStr = Environment.GetEnvironmentVariable("PORT_DB") ?? "3306";
+int portDb = int.Parse(portDbStr);
+string database = Environment.GetEnvironmentVariable("MYSQL_DATABASE") ?? "vehicleCatalog";
+string username = Environment.GetEnvironmentVariable("MYSQL_USER") ?? "root";
+string password = Environment.GetEnvironmentVariable("MYSQL_PASSWORD") ?? "password";
+string host = Environment.GetEnvironmentVariable("HOST") ?? "localhost";
+string urlProtocol = Environment.GetEnvironmentVariable("URL_PROTOCOL") ?? "http";
+var portStr = Environment.GetEnvironmentVariable("PORT") ?? "5099";
+int port = int.Parse(portStr);
+var applicationUrl = $"{urlProtocol}://{host}:{port}";
 
+// Add services to the container.
+// builder.WebHost.UseUrls(applicationUrl);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -21,9 +33,17 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<DataContext>(options =>
 {
-  string connectionString = builder.Configuration.GetConnectionString("Default");
+  // string connectionString = builder.Configuration.GetConnectionString("Default");
+  string connectionString = $"Server={server};Port={portDb};Database={database};Uid={username};Pwd={password};";
   options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 });
+
+var serviceProvider = builder.Services.BuildServiceProvider();
+using (var scope = serviceProvider.CreateScope())
+{
+  var dbContext = scope.ServiceProvider.GetService<DataContext>();
+  dbContext.Database.Migrate();
+}
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<DataContext>().AddDefaultTokenProviders();
 
@@ -70,6 +90,8 @@ if (app.Environment.IsDevelopment())
 else
 {
   app.UseExceptionHandler("/error");
+  app.UseSwagger();
+  app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
