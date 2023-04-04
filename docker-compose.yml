@@ -17,10 +17,11 @@ services:
       MYSQL_PASSWORD: password
       MYSQL_HOST: localhost
       MYSQL_ROOT_PASSWORD: password
-    
+
 
   backend:
-    image: backend
+    container_name: backend_vheicles_catalog
+    image: backend_vheicles_catalog
     build:
       context: .
       dockerfile: backEnd/Dockerfile
@@ -30,4 +31,15 @@ services:
       - MYSQL_HOST=db
     depends_on:
       - db
+    restart: on-failure
+
+  frontend:
+    container_name: frontend_vheicles_catalog
+    image: frontend_vheicles_catalog
+    build: ./frontEnd
+    ports:
+      - 3000:3000
+    working_dir: /app-frontend
+    depends_on:
+      - backend
     restart: on-failure

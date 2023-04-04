@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = 'https://localhost:7267'
+const url = 'http://localhost:5099'
 
 const VehiclesServices = {
   fetchAllVehicles: async (q, pn, pq) => {
