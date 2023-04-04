@@ -14,9 +14,7 @@ COPY ["backEnd.csproj", "."]
 RUN dotnet restore "backEnd.csproj"
 COPY . .
 WORKDIR "/src"
-RUN dotnet dev-certs https
-RUN -E dotnet dev-certs https -ep /usr/local/share/ca-certificates/aspnet/https.crt --format PEM
-RUN update-ca-certificates
+RUN dotnet dev-certs https --trust
 RUN dotnet build "backEnd.csproj" -c Release -o /app/build
 
 FROM build AS publish
