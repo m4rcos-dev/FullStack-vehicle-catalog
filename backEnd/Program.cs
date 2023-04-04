@@ -21,7 +21,15 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<DataContext>(options =>
 {
-  string connectionString = builder.Configuration.GetConnectionString("Default");
+  // string connectionString = builder.Configuration.GetConnectionString("Default");
+  string server = Environment.GetEnvironmentVariable("MYSQL_HOST");
+  string portStr = Environment.GetEnvironmentVariable("PORT");
+  int port = int.Parse(portStr);
+  string database = Environment.GetEnvironmentVariable("MYSQL_DATABASE");
+  string username = Environment.GetEnvironmentVariable("MYSQL_USER");
+  string password = Environment.GetEnvironmentVariable("MYSQL_PASSWORD");
+
+  string connectionString = $"Server={server};Port={port};Database={database};Uid={username};Pwd={password};";
   options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 });
 
