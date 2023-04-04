@@ -12,8 +12,20 @@ using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+string server = Environment.GetEnvironmentVariable("MYSQL_HOST") ?? "localhost";
+string portDbStr = Environment.GetEnvironmentVariable("PORT_DB") ?? "3306";
+int portDb = int.Parse(portDbStr);
+string database = Environment.GetEnvironmentVariable("MYSQL_DATABASE") ?? "vehicleCatalog";
+string username = Environment.GetEnvironmentVariable("MYSQL_USER") ?? "root";
+string password = Environment.GetEnvironmentVariable("MYSQL_PASSWORD") ?? "password";
+string host = Environment.GetEnvironmentVariable("HOST") ?? "localhost";
+string urlProtocol = Environment.GetEnvironmentVariable("URL_PROTOCOL") ?? "http";
+var portStr = Environment.GetEnvironmentVariable("PORT") ?? "5099";
+int port = int.Parse(portStr);
+var applicationUrl = $"{urlProtocol}://{host}:{port}";
 
+// Add services to the container.
+builder.WebHost.UseUrls(applicationUrl);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -22,14 +34,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<DataContext>(options =>
 {
   // string connectionString = builder.Configuration.GetConnectionString("Default");
-  string server = Environment.GetEnvironmentVariable("MYSQL_HOST");
-  string portStr = Environment.GetEnvironmentVariable("PORT");
-  int port = int.Parse(portStr);
-  string database = Environment.GetEnvironmentVariable("MYSQL_DATABASE");
-  string username = Environment.GetEnvironmentVariable("MYSQL_USER");
-  string password = Environment.GetEnvironmentVariable("MYSQL_PASSWORD");
-
-  string connectionString = $"Server={server};Port={port};Database={database};Uid={username};Pwd={password};";
+  string connectionString = $"Server={server};Port={portDb};Database={database};Uid={username};Pwd={password};";
   options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 });
 
@@ -80,7 +85,7 @@ else
   app.UseExceptionHandler("/error");
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 
 app.UseCors(c =>
 {
