@@ -30,68 +30,25 @@
 <details>
    <summary><strong>🐳 Running all project dependencies</strong></summary><br />
 
-   ## Utilities needed
+   **⚠️ Before starting, your docker-compose needs to be at version 1.29 or higher. [See here](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-ubuntu-20-04-en) or [in the documentation](https ://docs.docker.com/compose/install/) how to install it. In the first article, you can replace where you are with `1.26.0` with `1.29.2`.**
 
-   To run the application it is necessary to have `Docker`, `dotnet sdk` and `node` installed on the machine.
+> ℹ️ Run the `backend`, `frontend` and `db` services with the command:
+```
+  docker-compose up -d --build
+```
+   - Remember to stop `mysql` if you are using it locally on the default port (`3306`), or adapt it, if you want to use the application in containers;
 
-   ### The application is divided into 3 layers:
-   - Database in MySql componentized in Docker.
-   - BackEnd using the dotnet sdk framework.
-   - FronteEnd using node and react frameworks.
+   - These services will initialize a container named `backend_vheicles_catalog`, `fontend_vheicles_catalog` and another named `db_vheicles_catalog`;
 
-   > Initially run the `database` in the folder that is in the root of the project then with the command below to upload the database.
-   ````
-   docker-compose up -d
-   ````
-   - Remember to stop `mysql` if you are using it locally on the default port (`3306`), or adapt it, if you want to use the application in containers
-   - These services will initialize a container called `db_vehicles_catalog`.
+   - From here you can access the application at `http://localhost:3000`;
 
-   > After the container and the database are still running in the root of the folder, enter the `backEnd` folder and run the `migrations` to populate the `database` with the command:
-````
-dotnet ef database update
-````
+   - The back-end endpoints are found at `http://localhost:5099`;
 
-   > After running the `migrations` correctly run the command:
-````
-dotnet run.
-````
-   - It will build and run the backEnd application on ports 7267 and 5000.
-   - Thus giving access to endpoints
-   - `/Vehicle` with the `GET` `POST` methods and `/Vheicle/{id}` with the `GET` `PUT` `DELETE` methods.
+   - **⚠️ Attention:** Do not run the npm audit fix command! It updates several project dependencies, and this update causes conflicts.
 
-   > In a new terminal go back to the root of the project and enter the folder called `frontEnd`
+   - ✨ **Tip:** The `Remote - Containers` extension is indicated so that you can develop your application in the Docker container directly in VS Code, as you do with your local files.
 
-   > Install the dependencies with:
-````
-npm install
-````
-
-   > After installation run the application with the command:
-````
-npm start
-````
-   - the application will open in the browser running on `localhost:3000`
-
-   ⚠ Warning ⚠ Do not run the npm audit fix command! It updates several project dependencies, and this update causes conflicts with the evaluator.
-
-   ⚠ Warning ⚠ If you are using macOS and running `docker-compose up -d` you get the following error:
-
-   ~~~bash
-   The Compose file './docker-compose.yml' is invalid because:
-   Unsupported config option for services.db: 'platform'
-   Unsupported config option for services.node: 'platform'
-   ~~~
-
-> 2 possible solutions were found for this problem:
-> 1. You can manually add the `platform: linux/amd64` option to the database service in the project's docker-compose.yml file, but this is a local solution and you should reproduce this for other projects.
-> 2. You can manually add the line `export DOCKER_DEFAULT_PLATFORM=linux/amd64` to your computer's .bashrc, .zshenv or .zshrc files, this is a global solution.
-> The solutions were based on [this source](https://stackoverflow.com/a/69636473).
-
-
-
-✨ **Tip:** The `Remote - Containers` extension is indicated so that you can access Docker containers directly in VS Code, as you do with your local files.
-
-<img src="https://user-images.githubusercontent.com/104791582/213542711-a092f145-a6e3-4172-89f4-417379cfefae.png" width="800px" >
+   <img src="https://user-images.githubusercontent.com/104791582/213542711-a092f145-a6e3-4172-89f4-417379cfefae.png" width="800px" >
 
 </details>
 <details>
