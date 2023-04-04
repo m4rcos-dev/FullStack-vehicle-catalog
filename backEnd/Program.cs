@@ -25,7 +25,7 @@ int port = int.Parse(portStr);
 var applicationUrl = $"{urlProtocol}://{host}:{port}";
 
 // Add services to the container.
-builder.WebHost.UseUrls(applicationUrl);
+// builder.WebHost.UseUrls(applicationUrl);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -41,8 +41,8 @@ builder.Services.AddDbContext<DataContext>(options =>
 var serviceProvider = builder.Services.BuildServiceProvider();
 using (var scope = serviceProvider.CreateScope())
 {
-    var dbContext = scope.ServiceProvider.GetService<DataContext>();
-    dbContext.Database.Migrate();
+  var dbContext = scope.ServiceProvider.GetService<DataContext>();
+  dbContext.Database.Migrate();
 }
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<DataContext>().AddDefaultTokenProviders();
@@ -94,7 +94,7 @@ else
   app.UseSwaggerUI();
 }
 
-// app.UseHttpsRedirection();
+app.UseHttpsRedirection();
 
 app.UseCors(c =>
 {
