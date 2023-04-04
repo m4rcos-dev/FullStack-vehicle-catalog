@@ -12,12 +12,12 @@ using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
-string server = Environment.GetEnvironmentVariable("MYSQL_HOST") ?? "localhost";
-string portDbStr = Environment.GetEnvironmentVariable("PORT_DB") ?? "3306";
+string server = Environment.GetEnvironmentVariable("MYSQLHOST") ?? "localhost";
+string portDbStr = Environment.GetEnvironmentVariable("MYSQLPORT") ?? "3306";
 int portDb = int.Parse(portDbStr);
-string database = Environment.GetEnvironmentVariable("MYSQL_DATABASE") ?? "vehicleCatalog";
-string username = Environment.GetEnvironmentVariable("MYSQL_USER") ?? "root";
-string password = Environment.GetEnvironmentVariable("MYSQL_PASSWORD") ?? "password";
+string database = Environment.GetEnvironmentVariable("MYSQLDATABASE") ?? "vehicleCatalog";
+string username = Environment.GetEnvironmentVariable("MYSQLUSER") ?? "root";
+string password = Environment.GetEnvironmentVariable("MYSQLPASSWORD") ?? "password";
 string host = Environment.GetEnvironmentVariable("HOST") ?? "localhost";
 string urlProtocol = Environment.GetEnvironmentVariable("URL_PROTOCOL") ?? "http";
 var portStr = Environment.GetEnvironmentVariable("PORT") ?? "5099";
