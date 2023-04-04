@@ -1,6 +1,5 @@
 FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
-EXPOSE 5099
 
 ENV ASPNETCORE_URLS=https://api-vehicle-catalog.up.railway.app
 
@@ -15,6 +14,9 @@ COPY ["backEnd.csproj", "."]
 RUN dotnet restore "backEnd.csproj"
 COPY . .
 WORKDIR "/src"
+RUN dotnet dev-certs https
+RUN sudo -E dotnet dev-certs https -ep /usr/local/share/ca-certificates/aspnet/https.crt --format PEM
+RUN sudo update-ca-certificates
 RUN dotnet build "backEnd.csproj" -c Release -o /app/build
 
 FROM build AS publish
