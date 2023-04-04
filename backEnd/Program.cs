@@ -38,6 +38,13 @@ builder.Services.AddDbContext<DataContext>(options =>
   options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 });
 
+var serviceProvider = builder.Services.BuildServiceProvider();
+using (var scope = serviceProvider.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetService<DataContext>();
+    dbContext.Database.Migrate();
+}
+
 builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<DataContext>().AddDefaultTokenProviders();
 
 // JWT
