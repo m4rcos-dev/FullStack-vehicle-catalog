@@ -23,4 +23,5 @@ RUN dotnet publish "backEnd.csproj" -c Release -o /app/publish /p:UseAppHost=fal
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+ARG EnvironmentVariable
 ENTRYPOINT ["dotnet", "backEnd.dll"]
