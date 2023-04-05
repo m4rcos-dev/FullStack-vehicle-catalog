@@ -3,5 +3,5 @@ WORKDIR /app-frontend
 COPY package* ./
 RUN npm install
 COPY . ./
-EXPOSE 3000
+ARG EnvironmentVariable
 ENTRYPOINT [ "npm", "start" ]
