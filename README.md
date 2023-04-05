@@ -6,6 +6,8 @@
 
 ![flag tools](https://img.shields.io/badge/Tools-%20Docker%20|%20.NET-9cf) ![flag tools](https://img.shields.io/badge/Languages-JavaScript%20|%20C%23-yellow) ![flag tools](https://img.shields.io/badge/Frameworks-Identity%20|%20JWT%20|%20React-yelow) ![flag database](https://img.shields.io/badge/Database-MySql-green) ![flag orm](https://img.shields.io/badge/ORM-Entity-blue) ![flag architecture](https://img.shields.io/badge/Architecture-P.O.O%20|%20MSC-orange) ![flag desing](https://img.shields.io/badge/Design%20Patterns-S.O.L.I.D-brown)
 
+### [DEPLOY](https://karsshop.bohr.io/)
+
 <p>The project's proposal was to create a vehicle catalog on a public page where it is possible to see registered vehicles and only the logged-in administrator can change, create and delete cars from the catalog.</p>
 <p>All layers of the application (Models, Service and Controllers) were developed where it is possible to perform the basic operations on a given database: Creation, Reading and Deletion (or CRUD, for the most intimate 😜).</p >
 <p>Endpoints were created to read and write in a database, using MySql.</p>
