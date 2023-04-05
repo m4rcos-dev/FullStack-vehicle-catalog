@@ -4,6 +4,8 @@
 
 ![flag tools](https://img.shields.io/badge/Tools-%20Docker%20|%20.NET-9cf) ![flag tools](https://img.shields.io/badge/Languages-JavaScript%20|%20C%23-yellow) ![flag tools](https://img.shields.io/badge/Frameworks-Identity%20|%20JWT%20|%20React-yelow) ![flag database](https://img.shields.io/badge/Database-MySql-green) ![flag orm](https://img.shields.io/badge/ORM-Entity-blue) ![flag architecture](https://img.shields.io/badge/Architecture-P.O.O%20|%20MSC-orange) ![flag desing](https://img.shields.io/badge/Design%20Patterns-S.O.L.I.D-brown)
 
+### [DEPLOY](https://karsshop.bohr.io/)
+
 <p>A proposta do projeto era criar um catalágo de veículos em uma página pública onde é possivel ver os veículos cadastrados e somente o administrador logado pode alterar, criar e deletar os carros do catálago.</p>
 <p>Foi desenvolvido todas as camadas da aplicação (Models, Service e Controllers) onde é possível executar as operações básicas em um determinado banco de dados: Criação, Leitura e Exclusão (ou CRUD, para os mais íntimos 😜).</p>
 <p>Foi criado endpoints para ler e escrever em um banco de dados, utilizando MySql.</p>
