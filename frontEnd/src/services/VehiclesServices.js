@@ -1,6 +1,8 @@
 import axios from "axios";
 
-const url = 'http://localhost:5099'
+const HOST = process.env.REACT_APP_API_HOST;
+const PROTOCOL = process.env.REACT_APP_API_PROTOCOL;
+const url = `${PROTOCOL}://${HOST}`
 
 const VehiclesServices = {
   fetchAllVehicles: async (q, pn, pq) => {
