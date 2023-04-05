@@ -18,7 +18,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build && npm run build:webpack",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "postinstall": "npm prune",
     "eject": "react-scripts eject"
